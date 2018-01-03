@@ -25,7 +25,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public int getItemCount()
     {
-        return 6;//alarmList.size();
+        return 600;//alarmList.size();
     }
 
     @Override
@@ -41,7 +41,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public void onBindViewHolder(AlarmViewHolder holder, int position)
     {
-        holder.timeTextView.setText("lemonade or something");
+        holder.timeTextView.setText("3:35 am");
     }
 
     class AlarmViewHolder extends RecyclerView.ViewHolder

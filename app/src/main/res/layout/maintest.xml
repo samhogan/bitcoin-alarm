@@ -10,10 +10,21 @@
         android:text="1 BTC = $15,132"
         android:gravity="center"
         android:textSize="32sp"
-        android:paddingTop="32dp"/>
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        android:elevation="3dp"
+        android:background="#f8f8f8"
+        android:layout_marginTop = "5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_margin="0dp"
+        />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_alarms"/>
+        android:id="@+id/rv_alarms"
+        android:paddingTop="3dp"
+        android:clipToPadding="false"/>
 </LinearLayout>
