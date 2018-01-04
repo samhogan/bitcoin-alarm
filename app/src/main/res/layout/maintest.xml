@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,10 +22,79 @@
         android:layout_margin="0dp"
         />
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coord"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rv_alarms"
-        android:paddingTop="3dp"
-        android:clipToPadding="false"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_alarms"
+            android:paddingTop="3dp"
+            android:clipToPadding="false"/>
+
+        <android.support.design.widget.FloatingActionButton
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:srcCompat="@android:drawable/ic_dialog_email"
+            app:layout_anchor="@id/rv_alarms"
+            app:layout_anchorGravity="bottom|right|end"
+            app:layout_behavior="com.samhgames.bitcoinalarm.ScrollAwareFABBehavior" />
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+
 </LinearLayout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1 BTC = $15,132"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp"
+        android:elevation="3dp"
+        android:background="#f8f8f8"
+        android:layout_marginTop = "5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="0dp"
+        android:layout_margin="0dp"
+        />
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rv_alarms"
+            android:paddingTop="3dp"
+            android:clipToPadding="false"/>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+
+            app:srcCompat="@android:drawable/ic_dialog_email"/>
+
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>-->
