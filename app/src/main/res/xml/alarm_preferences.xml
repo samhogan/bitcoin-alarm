@@ -7,8 +7,9 @@
         android:title="Switch preference" />
 
     <com.samhgames.bitcoinalarm.TimePreference
-        android:defaultValue="03:00"
-        android:key="time_preference"
-        android:title="time" />
+        android:defaultValue="500"
+        android:key="time_preferencye"
+        android:title="Time"
+        android:dialogTitle=""/>
 
 </PreferenceScreen>

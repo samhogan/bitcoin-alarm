@@ -13,20 +13,22 @@ import android.widget.TimePicker;
 
 public class TimePreference extends DialogPreference
 {
-    private int lastHour=0;
-    private int lastMinute=0;
-    private TimePicker picker=null;
+    private int totalMinutes;//500 == 8:20 for example
+    private int hours = 0;
+    private int minutes = 0;
+    private TimePicker picker = null;
 
-    public static int getHour(String time) {
-        String[] pieces=time.split(":");
-
-        return(Integer.parseInt(pieces[0]));
+    public int getTime()
+    {
+        return totalMinutes;
     }
+    public void setTime(int time)
+    {
+        totalMinutes = time;
+        // Save to Shared Preferences
+        if(callChangeListener(time))
+            persistInt(time);
 
-    public static int getMinute(String time) {
-        String[] pieces=time.split(":");
-
-        return(Integer.parseInt(pieces[1]));
     }
 
     public TimePreference(Context ctxt, AttributeSet attrs) {
@@ -37,57 +39,71 @@ public class TimePreference extends DialogPreference
     }
 
     @Override
-    protected View onCreateDialogView()
-    {
-        return new TimePicker(getContext());
+    protected View onCreateDialogView() {
+        picker=new TimePicker(getContext());
+
+        return(picker);
     }
 
     @Override
-    protected void onBindDialogView(View v) {
+    protected void onBindDialogView(View v)
+    {
         super.onBindDialogView(v);
 
-        picker.setCurrentHour(lastHour);
-        picker.setCurrentMinute(lastMinute);
+        picker.setCurrentHour(hours);
+        picker.setCurrentMinute(minutes);
     }
 
     @Override
     protected void onDialogClosed(boolean positiveResult) {
         super.onDialogClosed(positiveResult);
 
-        if (positiveResult) {
-            lastHour=picker.getCurrentHour();
-            lastMinute=picker.getCurrentMinute();
+        if (positiveResult)
+        {
+            hours = picker.getCurrentHour();
+            minutes = picker.getCurrentMinute();
 
-            String time=String.valueOf(lastHour)+":"+String.valueOf(lastMinute);
-
-            if (callChangeListener(time)) {
-                persistString(time);
-            }
+            setTime(hours*60+minutes);
+            //notifyChanged();//dunno what this does but it seems important
+            updateSummary();
         }
     }
 
     @Override
-    protected Object onGetDefaultValue(TypedArray a, int index) {
-        return(a.getString(index));
+    protected Object onGetDefaultValue(TypedArray a, int index)
+    {
+        return(a.getInt(index, 0));
     }
 
     @Override
-    protected void onSetInitialValue(boolean restoreValue, Object defaultValue) {
-        String time=null;
+    protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue)
+    {
+        // Read the value. Use the default value if it is not possible.
+        setTime(restorePersistedValue ?  getPersistedInt(totalMinutes) : (int) defaultValue);
 
-        if (restoreValue) {
-            if (defaultValue==null) {
-                time=getPersistedString("00:00");
-            }
-            else {
-                time=getPersistedString(defaultValue.toString());
-            }
-        }
-        else {
-            time=defaultValue.toString();
+        //set the hour and minute
+        hours = totalMinutes / 60;
+        minutes = totalMinutes % 60;
+
+        updateSummary();
+
+    }
+
+    //updates the summary text of the preference
+    protected void updateSummary()
+    {
+        //add a check for 24 hour clock
+        String postfix = "AM";
+        int realHours = hours;
+        if(hours>12)
+        {
+            postfix = "PM";
+            realHours-=12;
         }
 
-        lastHour=getHour(time);
-        lastMinute=getMinute(time);
+        String summary = realHours + ":" + minutes + " " + postfix;
+
+        setSummary(summary);
+
     }
 }
