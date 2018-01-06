@@ -5,19 +5,101 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samhgames.bitcoinalarm.AlarmSettings">
+    tools:context="com.samhgames.bitcoinalarm.AlarmSettingsActivity">
 
     <TimePicker
         android:id="@+id/timePicker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="229dp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="time" />
+        android:inputType="time"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="CheckBox"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:button="@null"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:foreground="?selectableItemBackground"
+        android:clickable="true"
+        android:background="@android:color/white"
+
+        >
+    <Switch
+        android:id="@+id/switch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch"
 
 
+        />
+
+    </LinearLayout>
+
+    <Switch
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Switch"
+        android:id="@+id/ra"
+        android:button="@null"
+        android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:background="?selectableItemBackground"/>
+
+    <RadioButton
+        android:id="@+id/radioButton4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="wowee"
+        android:button="@drawable/ic_launcher_background"
+        android:padding="10dp"
+        android:background="?selectableItemBackground"/>
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:id="@+id/three"
+    android:text="wowee"
+        android:button="@null"
+        android:drawableRight="?android:attr/listChoiceIndicatorSingle"
+        android:padding="10dp"
+        android:drawablePadding="10dp"
+        android:background="?selectableItemBackground"
+
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:background="?attr/selectableItemBackground"
+        />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/activity_settings"
+        android:name="com.samhgames.bitcoinalarm.SettingsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
