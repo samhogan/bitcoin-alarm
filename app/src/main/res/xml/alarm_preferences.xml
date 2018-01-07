@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
+    <com.samhgames.bitcoinalarm.TimePreference
+        android:defaultValue="500"
+        android:key="@string/pref_time_key"
+        android:title="@string/pref_time_title"
+        android:dialogTitle=""/>
+
     <SwitchPreference
         android:defaultValue="false"
         android:key="switch_preference_1"
         android:title="Switch preference" />
 
-    <com.samhgames.bitcoinalarm.TimePreference
-        android:defaultValue="500"
-        android:key="time_preferencye"
-        android:title="Time"
-        android:dialogTitle=""/>
+    <MultiSelectListPreference
+        android:defaultValue="@array/array_empty"
+        android:entries="@array/pref_repeat_option_labels"
+        android:entryValues="@array/pref_repeat_option_values"
+        android:key="@string/pref_repeat_key"
+        android:title="@string/pref_repeat_title" />
 
 </PreferenceScreen>

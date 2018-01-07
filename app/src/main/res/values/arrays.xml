@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+    <array name="pref_repeat_option_labels">
+        <item>@string/pref_repeat_mon_label</item>
+        <item>@string/pref_repeat_tue_label</item>
+        <item>@string/pref_repeat_wed_label</item>
+        <item>@string/pref_repeat_thurs_label</item>
+        <item>@string/pref_repeat_fri_label</item>
+        <item>@string/pref_repeat_sat_label</item>
+        <item>@string/pref_repeat_sun_label</item>
+    </array>
+
+    <array name="pref_repeat_option_values">
+        <item>@string/pref_repeat_mon_value</item>
+        <item>@string/pref_repeat_tue_value</item>
+        <item>@string/pref_repeat_wed_value</item>
+        <item>@string/pref_repeat_thurs_value</item>
+        <item>@string/pref_repeat_fri_value</item>
+        <item>@string/pref_repeat_sat_value</item>
+        <item>@string/pref_repeat_sun_value</item>
+    </array>
+
+    <array name="array_empty">
+
+    </array>
+
+</resources>

@@ -30,12 +30,14 @@ public class MainActivity extends AppCompatActivity
         alarmRecyclerView.setLayoutManager(llm);
 
 
-        AlarmAdapter adapter = new AlarmAdapter();
+        AlarmAdapter adapter = new AlarmAdapter(this);
         alarmRecyclerView.setAdapter(adapter);
 
 
         fab = (FloatingActionButton)findViewById(R.id.fab);
 
+
+        //show and hide fab
         alarmRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
