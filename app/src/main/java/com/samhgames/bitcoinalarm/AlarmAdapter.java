@@ -66,9 +66,9 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         @Override
         public void onClick(View view)
         {
-            Toast.makeText(context, "Why won't this work?", Toast.LENGTH_LONG).show();
+           // Toast.makeText(context, "Why won't this work?", Toast.LENGTH_LONG).show();
             //Log.d("yo", "I have no idea");
-            Intent intent = new Intent(context, SettingsActivity.class);
+            Intent intent = new Intent(context, AlarmSettingsActivity.class);
             context.startActivity(intent);
         }
 

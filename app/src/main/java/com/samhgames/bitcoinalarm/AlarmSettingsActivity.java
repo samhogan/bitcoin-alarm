@@ -14,8 +14,13 @@ public class AlarmSettingsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         //SharedPreferences settings = getSharedPreferences("PreferencesName", Context.MODE_PRIVATE);
         //settings.edit().clear().commit();
-        getFragmentManager().beginTransaction()
+       /* getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new AlarmSettingsFragment())
-                .commit();
+                .commit();*/
+
+        setContentView(R.layout.activity_alarm_settings);
+        getSupportActionBar().hide();
+
+
     }
 }
