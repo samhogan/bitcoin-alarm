@@ -1,6 +1,8 @@
 package com.samhgames.bitcoinalarm;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,10 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.samhgames.bitcoinalarm.data.DataContract;
+import com.samhgames.bitcoinalarm.data.DbHelper;
+
 public class MainActivity extends AppCompatActivity
 {
     RecyclerView alarmRecyclerView;
     FloatingActionButton fab;
+
+    //the database containing a table of all alarms
+    private SQLiteDatabase mDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,6 +30,12 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintest);
 
+        //dbhelper instance
+        DbHelper dbHelper = new DbHelper(this);
+        //get writable database
+        mDb = dbHelper.getWritableDatabase();
+
+        //set up the recyclerview
         alarmRecyclerView = (RecyclerView)findViewById(R.id.rv_alarms);
         alarmRecyclerView.setHasFixedSize(true);
 
@@ -50,6 +64,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        //fab click
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -59,6 +74,8 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
 
 
 
@@ -90,5 +107,19 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    //returns a cursor of all alarms, ordered by time
+    private Cursor getAllAlarms()
+    {
+        return mDb.query(DataContract.DataEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DataContract.DataEntry.COLUMN_TIME);
+
     }
 }

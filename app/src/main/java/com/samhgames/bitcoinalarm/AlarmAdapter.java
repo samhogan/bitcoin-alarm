@@ -21,17 +21,19 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     private java.util.List<Alarm> alarmList;
     private Context context;
+    private int count;
 
-    public AlarmAdapter(/*List<Alarm> _alarmList,*/ Context _context)
+    public AlarmAdapter(/*List<Alarm> _alarmList,*/ Context _context, int _count)
     {
         //alarmList = _alarmList;
         context = _context;
+        count = _count;
     }
 
     @Override
     public int getItemCount()
     {
-        return 12;//alarmList.size();
+        return count;//alarmList.size();
     }
 
     @Override

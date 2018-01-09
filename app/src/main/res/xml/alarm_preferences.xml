@@ -10,9 +10,9 @@
         android:dialogTitle=""/>
 
     <SwitchPreference
-        android:defaultValue="false"
+        android:defaultValue="true"
         android:key="switch_preference_1"
-        android:title="Switch preference" />
+        android:title="Read read price after alarm" />
 
     <MultiSelectListPreference
         android:defaultValue="@array/array_empty"
@@ -20,5 +20,8 @@
         android:entryValues="@array/pref_repeat_option_values"
         android:key="@string/pref_repeat_key"
         android:title="@string/pref_repeat_title" />
+
+
+
 
 </PreferenceScreen>
