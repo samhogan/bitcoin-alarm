@@ -1,5 +1,6 @@
 package com.samhgames.bitcoinalarm;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,6 +16,8 @@ import android.view.View;
 
 import com.samhgames.bitcoinalarm.data.DataContract;
 import com.samhgames.bitcoinalarm.data.DbHelper;
+
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -35,6 +38,8 @@ public class MainActivity extends AppCompatActivity
         //get writable database
         mDb = dbHelper.getWritableDatabase();
 
+        Cursor cursor = getAllAlarms();
+
         //set up the recyclerview
         alarmRecyclerView = (RecyclerView)findViewById(R.id.rv_alarms);
         alarmRecyclerView.setHasFixedSize(true);
@@ -44,10 +49,10 @@ public class MainActivity extends AppCompatActivity
         alarmRecyclerView.setLayoutManager(llm);
 
 
-        AlarmAdapter adapter = new AlarmAdapter(this);
+        AlarmAdapter adapter = new AlarmAdapter(this, cursor);
         alarmRecyclerView.setAdapter(adapter);
 
-
+        //the floating action button
         fab = (FloatingActionButton)findViewById(R.id.fab);
 
 
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-
+        addNewAlarm(new Random().nextInt(300));
 
 
     }
@@ -121,5 +126,16 @@ public class MainActivity extends AppCompatActivity
                 null,
                 DataContract.DataEntry.COLUMN_TIME);
 
+    }
+
+    private void addNewAlarm(int time)
+    {
+        ContentValues cv = new ContentValues();
+        cv.put(DataContract.DataEntry.COLUMN_TIME, time);
+        cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, 1);
+        cv.put(DataContract.DataEntry.COLUMN_REPEAT, 4);
+
+        //insert it into the table
+        mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
     }
 }

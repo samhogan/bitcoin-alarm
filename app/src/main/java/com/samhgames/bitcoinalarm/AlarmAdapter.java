@@ -2,6 +2,7 @@ package com.samhgames.bitcoinalarm;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.samhgames.bitcoinalarm.data.DataContract;
 
 import java.util.List;
 
@@ -21,19 +24,19 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
 
     private java.util.List<Alarm> alarmList;
     private Context context;
-    private int count;
+    private Cursor cursor;
 
-    public AlarmAdapter(/*List<Alarm> _alarmList,*/ Context _context, int _count)
+    public AlarmAdapter(/*List<Alarm> _alarmList,*/ Context _context, Cursor _cursor)
     {
         //alarmList = _alarmList;
         context = _context;
-        count = _count;
+        cursor = _cursor;
     }
 
     @Override
     public int getItemCount()
     {
-        return count;//alarmList.size();
+        return cursor.getCount();//alarmList.size();
     }
 
     @Override
@@ -49,7 +52,12 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
     @Override
     public void onBindViewHolder(AlarmViewHolder holder, int position)
     {
-        holder.timeTextView.setText("3:35 am");
+        //move the cursor the the next position
+        if(!cursor.moveToPosition(position))
+            return;
+
+        String timeString = "" + cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME)) + " o'clock or whatever";
+        holder.timeTextView.setText(timeString);
     }
 
     class AlarmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
