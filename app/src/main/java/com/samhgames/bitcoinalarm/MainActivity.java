@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        addNewAlarm(new Random().nextInt(300));
+       // addNewAlarm(new Random().nextInt(300));
 
 
     }
@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings)
         {
             Intent intent = new Intent(this, SettingsActivity.class);
+            //intent.putExtra("DB", mDb);
             startActivity(intent);
             return true;
         }
@@ -128,14 +129,5 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void addNewAlarm(int time)
-    {
-        ContentValues cv = new ContentValues();
-        cv.put(DataContract.DataEntry.COLUMN_TIME, time);
-        cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, 1);
-        cv.put(DataContract.DataEntry.COLUMN_REPEAT, 4);
 
-        //insert it into the table
-        mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
-    }
 }

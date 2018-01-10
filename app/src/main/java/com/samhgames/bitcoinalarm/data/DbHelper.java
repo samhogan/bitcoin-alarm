@@ -3,6 +3,7 @@ package com.samhgames.bitcoinalarm.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Parcelable;
 
 /**
  * Created by samho on 1/8/2018.
