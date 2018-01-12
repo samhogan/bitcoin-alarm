@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.MultiSelectListPreference;
+import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +20,15 @@ public class AlarmSettingsActivity extends AppCompatActivity
     //the database containing a table of all alarms
     private SQLiteDatabase mDb;
 
+    //is a new alarm being created (as opposed to a current alarm being edited)
+    private boolean newAlarm;
 
+    TimePreference timePref;
+    SwitchPreference readPref;
+    MultiSelectListPreference repeatPref;
+
+    //a reference to the shared preferences
+    SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -60,8 +71,22 @@ public class AlarmSettingsActivity extends AppCompatActivity
             }
         });
 
+       // AlarmSettingsActivity alarm = (fra)findViewById(R.id.activity_settingsi);
+
+       // timePref = (TimePreference)
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+
     }
 
+
+    //changes the sharedpreference values to
+    void setupPrefs()
+    {
+
+
+    }
 
     //if the player saves a new alarm, it is added to the database
     private void addNewAlarm(int time)

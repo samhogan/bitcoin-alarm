@@ -17,6 +17,8 @@ public class AlarmSettingsFragment extends PreferenceFragment
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.alarm_preferences);
+
+
     }
 
 }

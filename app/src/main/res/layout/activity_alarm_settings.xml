@@ -45,7 +45,7 @@
     </LinearLayout>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/activity_settings"
+        android:id="@+id/activity_settingsi"
         android:name="com.samhgames.bitcoinalarm.AlarmSettingsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
