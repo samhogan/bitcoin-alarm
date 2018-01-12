@@ -1,5 +1,6 @@
 package com.samhgames.bitcoinalarm;
 
+import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TimePicker;
 
 import com.samhgames.bitcoinalarm.data.DataContract;
 import com.samhgames.bitcoinalarm.data.DbHelper;
@@ -23,12 +25,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     //is a new alarm being created (as opposed to a current alarm being edited)
     private boolean newAlarm;
 
-    TimePreference timePref;
-    SwitchPreference readPref;
-    MultiSelectListPreference repeatPref;
-
-    //a reference to the shared preferences
-    SharedPreferences prefs;
+    private TimePickerDialog timePicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,7 +37,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 .replace(android.R.id.content, new AlarmSettingsFragment())
                 .commit();*/
 
-        setContentView(R.layout.activity_alarm_settings);
+        setContentView(R.layout.activity_alarm_settings2);
         getSupportActionBar().hide();
 
 
@@ -73,20 +70,18 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
        // AlarmSettingsActivity alarm = (fra)findViewById(R.id.activity_settingsi);
 
-       // timePref = (TimePreference)
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-    }
-
-
-    //changes the sharedpreference values to
-    void setupPrefs()
-    {
-
+        //set up the time picker
+        timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                //eReminderTime.setText( selectedHour + ":" + selectedMinute);
+            }
+        }, 5, 30, false);//Yes 24 hour time
+        timePicker.show();
 
     }
+
 
     //if the player saves a new alarm, it is added to the database
     private void addNewAlarm(int time)
