@@ -17,5 +17,7 @@ public class DataContract
         public static final String COLUMN_READ_PRICE = "readPrice";
         public static final String COLUMN_REPEAT = "repeat";
 
+
+
     }
 }

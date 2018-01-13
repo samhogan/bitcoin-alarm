@@ -4,14 +4,19 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.MultiSelectListPreference;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.samhgames.bitcoinalarm.data.DataContract;
@@ -27,6 +32,15 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
     private TimePickerDialog timePicker;
 
+    private long id;
+
+    private Switch readSwitch;
+    private TextView timeTextView;
+
+    int time;
+   // int hours;
+    //int minutes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -38,7 +52,20 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 .commit();*/
 
         setContentView(R.layout.activity_alarm_settings2);
+
+        //hide the action bar (save and cancel buttons in its place
         getSupportActionBar().hide();
+
+        //get the id passed into the intent so the data can be retrieved from the database
+        id = getIntent().getLongExtra("ID", -1);
+
+        newAlarm = false;//getIntent.getBoolExtra('yobro');
+
+        readSwitch = (Switch)findViewById(R.id.read_switch);
+        timeTextView = (TextView)findViewById(R.id.tv_time);
+
+        setClickListeners();
+
 
 
         //apparently the right way to do this is to create a new instance of dbHelper...
@@ -47,41 +74,94 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //get writable database
         mDb = dbHelper.getWritableDatabase();
 
+        Cursor cursor = mDb.query(DataContract.DataEntry.TABLE_NAME,
+                null,
+                DataContract.DataEntry._ID + " = " + id,
+                null,
+                null,
+                null,
+                DataContract.DataEntry.COLUMN_TIME);
 
-        Button saveBtn = (Button)findViewById(R.id.saveBtn);
+        Log.d("idk", "blah " + cursor.getCount());
+        //get the time in minutes
+        cursor.moveToPosition(0);
+        time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
+        cursor.close();
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                finish();
-                // Code here executes on main thread after user presses button
-            }
-        });
+        //calculate the hours and minutes from the int time
+        int hours = time/60;
+        int minutes = time%60;
 
-        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                finish();
-                // Code here executes on main thread after user presses button
-            }
-        });
-
-       // AlarmSettingsActivity alarm = (fra)findViewById(R.id.activity_settingsi);
-
+        setTimeText(hours, minutes);
 
         //set up the time picker
         timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
-            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                //eReminderTime.setText( selectedHour + ":" + selectedMinute);
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
+            {
+                setTimeText(selectedHour, selectedMinute);
             }
-        }, 5, 30, false);//Yes 24 hour time
-        timePicker.show();
+        }, hours, minutes, false);
+
+        //show the timePicker immediately if it is a new alarm
+        if(newAlarm)
+            timePicker.show();
 
     }
 
+    //set the top time text
+    void setTimeText(int hours, int minutes)
+    {
+        //add a check for 24 hour clock
+        String postfix = "AM";
+        int realHours = hours;
+        if(hours>12)
+        {
+            postfix = "PM";
+            realHours-=12;
+        }
+
+        String summary = realHours + ":" + minutes + " " + postfix;
+
+        timeTextView.setText(summary);
+
+    }
+
+    //for some organization
+    private void setClickListeners()
+    {
+        findViewById(R.id.time_card).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                timePicker.show();
+            }
+        });
+
+        //read aloud switch
+        findViewById(R.id.read_card).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                readSwitch.setChecked(!readSwitch.isChecked());
+            }
+        });
+
+        Button saveBtn = (Button)findViewById(R.id.saveBtn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+
+        Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                finish();
+            }
+        });
+
+    }
 
     //if the player saves a new alarm, it is added to the database
     private void addNewAlarm(int time)

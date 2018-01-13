@@ -11,11 +11,14 @@
     <style name="SettingsCard">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="card_view:cardCornerRadius">4dp</item>
+        <item name="cardCornerRadius">4dp</item>
         <item name="android:layout_marginTop">3dp</item>
         <item name="android:layout_marginBottom">3dp</item>
         <item name="android:layout_marginRight">6dp</item>
         <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
 
     </style>
 </resources>

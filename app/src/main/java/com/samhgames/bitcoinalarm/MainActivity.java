@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity
         {
             Intent intent = new Intent(this, SettingsActivity.class);
             //intent.putExtra("DB", mDb);
+
             startActivity(intent);
             return true;
         }

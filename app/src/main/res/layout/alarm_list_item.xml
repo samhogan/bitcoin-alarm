@@ -14,7 +14,7 @@
     android:layout_marginLeft="6dp"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:selectableItemBackground">
+    android:foreground="?android:selectableItemBackground">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
