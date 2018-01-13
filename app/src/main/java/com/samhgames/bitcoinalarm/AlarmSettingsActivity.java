@@ -56,10 +56,14 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //hide the action bar (save and cancel buttons in its place
         getSupportActionBar().hide();
 
-        //get the id passed into the intent so the data can be retrieved from the database
-        id = getIntent().getLongExtra("ID", -1);
+        newAlarm = false;
 
-        newAlarm = false;//getIntent.getBoolExtra('yobro');
+        //get the id passed into the intent so the data can be retrieved from the database
+        if(getIntent().hasExtra("ID"))
+            id = getIntent().getLongExtra("ID", -1);
+        else
+            newAlarm = true;
+
 
         readSwitch = (Switch)findViewById(R.id.read_switch);
         timeTextView = (TextView)findViewById(R.id.tv_time);
@@ -74,19 +78,27 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //get writable database
         mDb = dbHelper.getWritableDatabase();
 
-        Cursor cursor = mDb.query(DataContract.DataEntry.TABLE_NAME,
-                null,
-                DataContract.DataEntry._ID + " = " + id,
-                null,
-                null,
-                null,
-                DataContract.DataEntry.COLUMN_TIME);
+        if(newAlarm)
+        {
+            time = 420;
 
-        Log.d("idk", "blah " + cursor.getCount());
-        //get the time in minutes
-        cursor.moveToPosition(0);
-        time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
-        cursor.close();
+        }
+        else
+        {
+            Cursor cursor = mDb.query(DataContract.DataEntry.TABLE_NAME,
+                    null,
+                    DataContract.DataEntry._ID + " = " + id,
+                    null,
+                    null,
+                    null,
+                    DataContract.DataEntry.COLUMN_TIME);
+
+           // Log.d("idk", "blah " + cursor.getCount());
+            //get the time in minutes
+            cursor.moveToPosition(0);
+            time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
+            cursor.close();
+        }
 
         //calculate the hours and minutes from the int time
         int hours = time/60;
@@ -99,6 +111,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
             {
+                time = selectedHour*60 + selectedMinute;
                 setTimeText(selectedHour, selectedMinute);
             }
         }, hours, minutes, false);
@@ -149,10 +162,12 @@ public class AlarmSettingsActivity extends AppCompatActivity
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
+                saveAlarm();
                 finish();
             }
         });
 
+        //canceling saves none of the data
         Button cancelBtn = (Button)findViewById(R.id.cancelBtn);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
@@ -163,8 +178,31 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
     }
 
+    private void saveAlarm()
+    {
+        //time = time
+        //encode all the data to be saved
+        int readNum = readSwitch.isChecked() ? 1:0;
+        int repeatNum = 5;
+
+        ContentValues cv = new ContentValues();
+        cv.put(DataContract.DataEntry.COLUMN_TIME, time);
+        cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
+        cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
+
+        if(newAlarm)//insert it into the table
+            mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
+        else//update it
+        {
+            String strFilter = DataContract.DataEntry._ID + " = " + id;
+            mDb.update(DataContract.DataEntry.TABLE_NAME, cv, strFilter, null);
+        }
+
+
+    }
+
     //if the player saves a new alarm, it is added to the database
-    private void addNewAlarm(int time)
+    private void addAlarm()
     {
         ContentValues cv = new ContentValues();
         cv.put(DataContract.DataEntry.COLUMN_TIME, time);

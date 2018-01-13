@@ -3,6 +3,7 @@ package com.samhgames.bitcoinalarm;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,14 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         //alarmList = _alarmList;
         context = _context;
         cursor = _cursor;
+    }
+
+    //if a new alarm is added or something is changed, refresh the data
+    public void setData(Cursor _cursor)
+    {
+        cursor.close();
+        cursor = _cursor;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -89,6 +98,8 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
             Intent intent = new Intent(context, AlarmSettingsActivity.class);
             intent.putExtra("ID", ID);
 
+
+            //((AppCompatActivity)context).startActivityForResult(intent, 0);
             context.startActivity(intent);
         }
 

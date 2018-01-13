@@ -1,6 +1,7 @@
 package com.samhgames.bitcoinalarm;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,14 +70,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        final Context mainContext = this;
         //fab click
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                  //      .setAction("Action", null).show();
+                Intent intent = new Intent(mainContext, AlarmSettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -86,6 +90,12 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        ((AlarmAdapter)alarmRecyclerView.getAdapter()).setData(getAllAlarms());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
