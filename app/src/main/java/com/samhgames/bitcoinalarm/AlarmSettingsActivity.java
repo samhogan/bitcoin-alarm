@@ -2,17 +2,10 @@ package com.samhgames.bitcoinalarm;
 
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.preference.MultiSelectListPreference;
-import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -125,19 +118,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     //set the top time text
     void setTimeText(int hours, int minutes)
     {
-        //add a check for 24 hour clock
-        String postfix = "AM";
-        int realHours = hours;
-        if(hours>12)
-        {
-            postfix = "PM";
-            realHours-=12;
-        }
-
-        String summary = realHours + ":" + minutes + " " + postfix;
-
-        timeTextView.setText(summary);
-
+        timeTextView.setText(TimeConverter.getTimeText(hours, minutes));
     }
 
     //for some organization
