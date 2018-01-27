@@ -30,12 +30,12 @@
         <activity android:name=".AlarmSettingsActivity" />
 
         <receiver
-            android:name=".NotificationReceiver"
+            android:name=".notification.NotificationReceiver"
             android:enabled="true"
             android:exported="true" />
 
         <activity
-            android:name=".NotificationActivity"
+            android:name=".notification.NotificationActivity"
             android:showOnLockScreen="true"
             android:screenOrientation="sensorPortrait"></activity>
 

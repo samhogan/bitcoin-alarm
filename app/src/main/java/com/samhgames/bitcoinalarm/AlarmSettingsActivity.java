@@ -3,7 +3,6 @@ package com.samhgames.bitcoinalarm;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +11,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.samhgames.bitcoinalarm.data.AlarmInfo;
 import com.samhgames.bitcoinalarm.data.DataContract;
-import com.samhgames.bitcoinalarm.data.DbHelper;
+import com.samhgames.bitcoinalarm.data.DbAccessor;
 
 public class AlarmSettingsActivity extends AppCompatActivity
 {
-    //the database containing a table of all alarms
-    private SQLiteDatabase mDb;
+
+    private DbAccessor db;
+
+    private AlarmInfo info;
 
     //is a new alarm being created (as opposed to a current alarm being edited)
     private boolean newAlarm;
@@ -30,7 +32,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     private Switch readSwitch;
     private TextView timeTextView;
 
-    int time;
+    //int time;
    // int hours;
     //int minutes;
 
@@ -65,37 +67,24 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
 
 
-        //apparently the right way to do this is to create a new instance of dbHelper...
-        //dbhelper instance
-        DbHelper dbHelper = new DbHelper(this);
-        //get writable database
-        mDb = dbHelper.getWritableDatabase();
+        db = new DbAccessor(this);
 
+        //create new info if a new alarm, else get it from the database
         if(newAlarm)
         {
-            time = 420;
+            info = new AlarmInfo(420, -1);
 
         }
         else
         {
-            Cursor cursor = mDb.query(DataContract.DataEntry.TABLE_NAME,
-                    null,
-                    DataContract.DataEntry._ID + " = " + id,
-                    null,
-                    null,
-                    null,
-                    DataContract.DataEntry.COLUMN_TIME);
+            info = db.getAlarm(id);
 
-           // Log.d("idk", "blah " + cursor.getCount());
-            //get the time in minutes
-            cursor.moveToPosition(0);
-            time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
-            cursor.close();
         }
 
         //calculate the hours and minutes from the int time
-        int hours = time/60;
-        int minutes = time%60;
+        //maybe move to alarminfo
+        int hours = info.getTime()/60;
+        int minutes = info.getTime()%60;
 
         setTimeText(hours, minutes);
 
@@ -104,7 +93,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
             {
-                time = selectedHour*60 + selectedMinute;
+                info.setTime(selectedHour*60 + selectedMinute);
                 setTimeText(selectedHour, selectedMinute);
             }
         }, hours, minutes, false);
@@ -143,7 +132,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                saveAlarm();
+                db.saveAlarm(info, newAlarm);
                 finish();
             }
         });
@@ -159,38 +148,4 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
     }
 
-    private void saveAlarm()
-    {
-        //time = time
-        //encode all the data to be saved
-        int readNum = readSwitch.isChecked() ? 1:0;
-        int repeatNum = 5;
-
-        ContentValues cv = new ContentValues();
-        cv.put(DataContract.DataEntry.COLUMN_TIME, time);
-        cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
-        cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
-
-        if(newAlarm)//insert it into the table
-            mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
-        else//update it
-        {
-            String strFilter = DataContract.DataEntry._ID + " = " + id;
-            mDb.update(DataContract.DataEntry.TABLE_NAME, cv, strFilter, null);
-        }
-
-
-    }
-
-    //if the player saves a new alarm, it is added to the database
-    private void addAlarm()
-    {
-        ContentValues cv = new ContentValues();
-        cv.put(DataContract.DataEntry.COLUMN_TIME, time);
-        cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, 1);
-        cv.put(DataContract.DataEntry.COLUMN_REPEAT, 4);
-
-        //insert it into the table
-        mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
-    }
 }

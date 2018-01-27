@@ -1,8 +1,10 @@
-package com.samhgames.bitcoinalarm;
+package com.samhgames.bitcoinalarm.notification;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import com.samhgames.bitcoinalarm.R;
 
 public class NotificationActivity extends AppCompatActivity
 {

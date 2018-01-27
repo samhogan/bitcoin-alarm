@@ -1,8 +1,10 @@
-package com.samhgames.bitcoinalarm;
+package com.samhgames.bitcoinalarm.notification;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.samhgames.bitcoinalarm.notification.NotificationActivity;
 
 public class NotificationReceiver extends BroadcastReceiver
 {
