@@ -4,8 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.samhgames.bitcoinalarm.data.DbHelper;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by samho on 1/27/2018.
@@ -61,6 +65,7 @@ public class DbAccessor
         cv.put(DataContract.DataEntry.COLUMN_TIME, info.getTime());
         cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
         cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
+        cv.put(DataContract.DataEntry.COLUMN_ACTIVE, 1);
 
         if(newAlarm)//insert it into the table
             mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
@@ -70,6 +75,34 @@ public class DbAccessor
             mDb.update(DataContract.DataEntry.TABLE_NAME, cv, strFilter, null);
         }
 
+       // Log.d("yo", "oh... no");
+    }
+
+    //returns an arraylist of all alarms, ordered by time
+    public ArrayList<AlarmInfo> getAllAlarms()
+    {
+        Cursor cursor = mDb.query(DataContract.DataEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DataContract.DataEntry.COLUMN_TIME);
+
+        ArrayList<AlarmInfo> alarmList = new ArrayList<AlarmInfo>();
+
+        for(int i=0; i<cursor.getCount(); i++)
+        {
+            cursor.moveToPosition(i);
+            int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
+            long id = cursor.getLong(cursor.getColumnIndex(DataContract.DataEntry._ID));
+
+            alarmList.add(new AlarmInfo(time, id));
+
+        }
+
+        cursor.close();
+        return alarmList;
 
     }
 

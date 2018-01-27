@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.samhgames.bitcoinalarm.data.DataContract;
+import com.samhgames.bitcoinalarm.data.DbAccessor;
 import com.samhgames.bitcoinalarm.data.DbHelper;
 
 import java.util.Random;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity
     FloatingActionButton fab;
 
     //the database containing a table of all alarms
-    private SQLiteDatabase mDb;
+    private DbAccessor db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,12 +35,10 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maintest);
 
-        //dbhelper instance
-        DbHelper dbHelper = new DbHelper(this);
-        //get writable database
-        mDb = dbHelper.getWritableDatabase();
+        //database accesor
+        db = new DbAccessor(this);
 
-        Cursor cursor = getAllAlarms();
+        //Cursor cursor = getAllAlarms();
 
         //set up the recyclerview
         alarmRecyclerView = (RecyclerView)findViewById(R.id.rv_alarms);
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         alarmRecyclerView.setLayoutManager(llm);
 
 
-        AlarmAdapter adapter = new AlarmAdapter(this, cursor);
+        AlarmAdapter adapter = new AlarmAdapter(this);
         alarmRecyclerView.setAdapter(adapter);
 
         //the floating action button
@@ -94,7 +93,9 @@ public class MainActivity extends AppCompatActivity
     protected void onStart()
     {
         super.onStart();
-        ((AlarmAdapter)alarmRecyclerView.getAdapter()).setData(getAllAlarms());
+
+        //load the data each time this activity is returned to
+        ((AlarmAdapter)alarmRecyclerView.getAdapter()).setData(db.getAllAlarms());
     }
 
     @Override
@@ -124,20 +125,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    //returns a cursor of all alarms, ordered by time
-    private Cursor getAllAlarms()
-    {
-        return mDb.query(DataContract.DataEntry.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DataContract.DataEntry.COLUMN_TIME);
-
     }
 
 
