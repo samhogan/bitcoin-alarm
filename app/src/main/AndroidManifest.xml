@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.samhgames.bitcoinalarm">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,8 +27,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.samhgames.bitcoinalarm.MainActivity" />
         </activity>
-        <activity android:name=".AlarmSettingsActivity">
-        </activity>
+        <activity android:name=".AlarmSettingsActivity" />
+
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".NotificationActivity"
+            android:showOnLockScreen="true"
+            android:screenOrientation="sensorPortrait"></activity>
+
     </application>
 
 </manifest>
