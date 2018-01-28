@@ -68,7 +68,11 @@ public class DbAccessor
         cv.put(DataContract.DataEntry.COLUMN_ACTIVE, 1);
 
         if(newAlarm)//insert it into the table
-            mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
+        {
+            //returns the id
+            long id = mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
+            info.setId(id);
+        }
         else//update it
         {
             String strFilter = DataContract.DataEntry._ID + " = " + info.getId();

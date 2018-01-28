@@ -2,6 +2,7 @@ package com.samhgames.bitcoinalarm;
 
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
     private Switch readSwitch;
     private TextView timeTextView;
 
+    Context context;
+
     //int time;
    // int hours;
     //int minutes;
@@ -50,6 +53,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
         //hide the action bar (save and cancel buttons in its place
         getSupportActionBar().hide();
+        context = this;
 
         newAlarm = false;
 
@@ -72,7 +76,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //create new info if a new alarm, else get it from the database
         if(newAlarm)
         {
-            info = new AlarmInfo(420, -1);
+            info = new AlarmInfo(420, -999);
 
         }
         else
@@ -81,12 +85,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
         }
 
-        //calculate the hours and minutes from the int time
-        //maybe move to alarminfo
-        int hours = info.getTime()/60;
-        int minutes = info.getTime()%60;
 
-        setTimeText(hours, minutes);
+        setTimeText(info.getHours(), info.getMinutes());
 
         //set up the time picker
         timePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
@@ -96,7 +96,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 info.setTime(selectedHour*60 + selectedMinute);
                 setTimeText(selectedHour, selectedMinute);
             }
-        }, hours, minutes, false);
+        }, info.getHours(), info.getMinutes(), false);
 
         //show the timePicker immediately if it is a new alarm
         if(newAlarm)
@@ -133,6 +133,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 db.saveAlarm(info, newAlarm);
+                //save alarm also sets the id in info
+                AlarmSetter.setAlarm(info, context);
                 finish();
             }
         });
