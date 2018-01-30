@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.samhgames.bitcoinalarm.data.AlarmInfo;
 import com.samhgames.bitcoinalarm.notification.NotificationReceiver;
@@ -42,8 +43,18 @@ public class AlarmSetter
 
         //setexact
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
+        Log.d("alarm is set", "alarm set" + info.getHours() + " " + info.getMinutes());
 
     }
+
+    public static void cancelAlarm(AlarmInfo info, Context context)
+    {
+        Intent myIntent = new Intent(context, NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)info.getId(), myIntent, 0);
+
+        pendingIntent.cancel();
+
+    }
+
 
 }

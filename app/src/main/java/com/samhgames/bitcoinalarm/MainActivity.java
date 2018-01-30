@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity
         //database accesor
         db = new DbAccessor(this);
 
+        //set the alarmmanager
+        AlarmSetter.setManager(this);
+        AlarmSetter.setManager(this);
+
         //Cursor cursor = getAllAlarms();
 
         //set up the recyclerview
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity
         alarmRecyclerView.setLayoutManager(llm);
 
 
-        AlarmAdapter adapter = new AlarmAdapter(this);
+        AlarmAdapter adapter = new AlarmAdapter(this, db);
         alarmRecyclerView.setAdapter(adapter);
 
         //the floating action button

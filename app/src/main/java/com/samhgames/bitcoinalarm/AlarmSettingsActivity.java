@@ -76,7 +76,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //create new info if a new alarm, else get it from the database
         if(newAlarm)
         {
-            info = new AlarmInfo(420, -999);
+            info = new AlarmInfo(420, -999, true);
 
         }
         else

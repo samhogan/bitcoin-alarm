@@ -47,9 +47,10 @@ public class DbAccessor
         //get the time in minutes
         cursor.moveToPosition(0);
         int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
+        boolean enabled = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_ACTIVE)) == 1;
         cursor.close();
 
-        return new AlarmInfo(time, id);
+        return new AlarmInfo(time, id, enabled);
 
     }
 
@@ -65,7 +66,7 @@ public class DbAccessor
         cv.put(DataContract.DataEntry.COLUMN_TIME, info.getTime());
         cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
         cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
-        cv.put(DataContract.DataEntry.COLUMN_ACTIVE, 1);
+        cv.put(DataContract.DataEntry.COLUMN_ACTIVE, info.isEnabled()?1:0);
 
         if(newAlarm)//insert it into the table
         {
@@ -100,8 +101,8 @@ public class DbAccessor
             cursor.moveToPosition(i);
             int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
             long id = cursor.getLong(cursor.getColumnIndex(DataContract.DataEntry._ID));
-
-            alarmList.add(new AlarmInfo(time, id));
+            boolean enabled = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_ACTIVE)) == 1;
+            alarmList.add(new AlarmInfo(time, id, enabled));
 
         }
 

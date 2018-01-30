@@ -8,15 +8,15 @@ package com.samhgames.bitcoinalarm.data;
 public class AlarmInfo
 {
     private int time, minutes, hours;
-
+    private boolean enabled;
 
     private long id;
 
-    public AlarmInfo(int _time, long _id)
+    public AlarmInfo(int _time, long _id, boolean _enabled)
     {
         setTime(_time);
         id = _id;
-
+        enabled = _enabled;
     }
 
     public int getTime()
@@ -42,4 +42,13 @@ public class AlarmInfo
 
     public int getHours() {return hours;}
 
+    public boolean isEnabled()
+    {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled)
+    {
+        this.enabled = enabled;
+    }
 }
