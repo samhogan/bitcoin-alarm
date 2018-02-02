@@ -1,12 +1,15 @@
 package com.samhgames.bitcoinalarm;
 
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.samhgames.bitcoinalarm.data.DataContract;
 import com.samhgames.bitcoinalarm.data.DbAccessor;
@@ -26,8 +30,12 @@ public class MainActivity extends AppCompatActivity
     RecyclerView alarmRecyclerView;
     FloatingActionButton fab;
 
+    TextView priceText;
+
     //the database containing a table of all alarms
     private DbAccessor db;
+
+    private BroadcastReceiver mLocalBroadcast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -58,6 +66,9 @@ public class MainActivity extends AppCompatActivity
 
         //the floating action button
         fab = (FloatingActionButton)findViewById(R.id.fab);
+
+
+        priceText = (TextView)findViewById(R.id.tv_price);
 
 
         //show and hide fab
@@ -91,7 +102,23 @@ public class MainActivity extends AppCompatActivity
        // addNewAlarm(new Random().nextInt(300));
 
 
+        //boradcast receiver for price updates
+        mLocalBroadcast = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                // take values from intent which contains in intent if you putted their
+                // here update the progress bar and textview
+                String message = intent.getStringExtra("message");
+                priceText.setText(message);
+            }
+        };
+
     }
+
+
+
+
 
     @Override
     protected void onStart()
@@ -100,6 +127,17 @@ public class MainActivity extends AppCompatActivity
 
         //load the data each time this activity is returned to
         ((AlarmAdapter)alarmRecyclerView.getAdapter()).setData(db.getAllAlarms());
+
+        //register the broadcast reciever
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcast , new IntentFilter("myBroadcast"));
+    }
+
+    @Override
+    protected void onStop()
+    {
+        //unregister
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mLocalBroadcast);
+        super.onStop();
     }
 
     @Override
