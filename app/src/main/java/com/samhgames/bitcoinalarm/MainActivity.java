@@ -109,10 +109,15 @@ public class MainActivity extends AppCompatActivity
             {
                 // take values from intent which contains in intent if you putted their
                 // here update the progress bar and textview
-                String message = intent.getStringExtra("message");
-                priceText.setText(message);
+                double price = intent.getDoubleExtra("price", 0);
+                priceText.setText("1 BTC = $" + price);
             }
         };
+
+
+
+        Intent getDataIntent = new Intent(this, DownloadCoinData.class);
+        startService(getDataIntent);
 
     }
 
@@ -129,7 +134,10 @@ public class MainActivity extends AppCompatActivity
         ((AlarmAdapter)alarmRecyclerView.getAdapter()).setData(db.getAllAlarms());
 
         //register the broadcast reciever
-        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcast , new IntentFilter("myBroadcast"));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalBroadcast , new IntentFilter(DownloadCoinData.DOWNLOAD_DATA));
+
+        //update price text
+
     }
 
     @Override
