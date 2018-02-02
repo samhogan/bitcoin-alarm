@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -64,6 +65,8 @@ public class DownloadCoinData extends IntentService
         // You can also include some extra data.
         updateIntent.putExtra("price", price); // msg for textview if needed
         LocalBroadcastManager.getInstance(this).sendBroadcast(updateIntent);
+
+        Log.d("coindata", "data downloaded!");
 
         //sharedPreferences.getBoolean(getString(R.string.pref_show_bass_key),
           //      getResources().getBoolean(R.bool.pref_show_bass_default)));

@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.samhgames.bitcoinalarm.data.AlarmInfo;
 import com.samhgames.bitcoinalarm.notification.NotificationReceiver;
+import com.samhgames.bitcoinalarm.notification.PreAlarmReceiver;
 
 import java.util.Calendar;
 
@@ -39,11 +40,20 @@ public class AlarmSetter
         calendar.set(Calendar.HOUR_OF_DAY, info.getHours());
         calendar.set(Calendar.MINUTE, info.getMinutes());
         Intent myIntent = new Intent(context, NotificationReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)info.getId(), myIntent, 0);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)info.getId()*2, myIntent, 0);
 
         //setexact
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-        Log.d("alarm is set", "alarm set" + info.getHours() + " " + info.getMinutes());
+        //Log.d("alarm is set", "alarm set" + info.getHours() + " " + info.getMinutes());
+
+
+        //now set the download data receiver
+        Intent preIntent = new Intent(context, PreAlarmReceiver.class);
+        PendingIntent prePendingIntent = PendingIntent.getBroadcast(context, (int)info.getId()*2+1, preIntent, 0);
+
+        //60 seconds earlier
+        alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis()-60000, prePendingIntent);
+
 
     }
 
