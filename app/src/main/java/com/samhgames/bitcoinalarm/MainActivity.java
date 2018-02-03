@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity
 
         priceText = (TextView)findViewById(R.id.tv_price);
 
+        String price = CoinUtils.getSavedPrice(this);
+        priceText.setText("1 BTC = $" + price);
 
         //show and hide fab
         alarmRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -109,13 +111,13 @@ public class MainActivity extends AppCompatActivity
             {
                 // take values from intent which contains in intent if you putted their
                 // here update the progress bar and textview
-                double price = intent.getDoubleExtra("price", 0);
+                String price = CoinUtils.getSavedPrice(mainContext);//intent.getDoubleExtra("price", 0);
                 priceText.setText("1 BTC = $" + price);
             }
         };
 
 
-
+        //download most recent data cus why not. Jk its for the main display and immediatly previewing alarms
         Intent getDataIntent = new Intent(this, DownloadCoinData.class);
         startService(getDataIntent);
 

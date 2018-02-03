@@ -30,7 +30,6 @@ public class DownloadCoinData extends IntentService
     @Override
     protected void onHandleIntent(Intent intent)
     {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         URL btcUrl = NetworkUtils.buildUrl();
         String rawJson = "you have failed";
@@ -40,6 +39,7 @@ public class DownloadCoinData extends IntentService
         } catch (IOException e)
         {
             e.printStackTrace();
+            rawJson = "failure";
         }
 
 
@@ -55,15 +55,18 @@ public class DownloadCoinData extends IntentService
         }
 
 
-            //set sharedpreferences
+        //set sharedpreferences
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putFloat("last_bitcoin_price", (float)price);
+        editor.commit();
 
 
         //broadcast that new data has been downloaded
         Intent updateIntent = new Intent(DOWNLOAD_DATA);
         // You can also include some extra data.
-        updateIntent.putExtra("price", price); // msg for textview if needed
+       // updateIntent.putExtra("price", price); // msg for textview if needed
         LocalBroadcastManager.getInstance(this).sendBroadcast(updateIntent);
 
         Log.d("coindata", "data downloaded!");

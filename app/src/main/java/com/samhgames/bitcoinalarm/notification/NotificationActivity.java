@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.samhgames.bitcoinalarm.AlarmSetter;
+import com.samhgames.bitcoinalarm.CoinUtils;
 import com.samhgames.bitcoinalarm.R;
 
 import java.util.Calendar;
@@ -75,6 +77,9 @@ public class NotificationActivity extends AppCompatActivity
 
        // Calendar c = Calendar.getInstance();
 
+
+        //Set click listeners for the two best buttons in the world
+
         final Context context = this;
 
         Button snoozeBtn = findViewById(R.id.snoozeBtn);
@@ -96,6 +101,10 @@ public class NotificationActivity extends AppCompatActivity
             }
         });
 
+
+        TextView priceText = findViewById(R.id.price_text);
+        String price = "$" + CoinUtils.getSavedPrice(this);
+        priceText.setText(price);
     }
 
 
