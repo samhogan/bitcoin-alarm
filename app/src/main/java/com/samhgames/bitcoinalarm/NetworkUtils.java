@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class NetworkUtils
 {
 
-    final static String BASE_URL = "https://coincap.io/page/BTC";
+    final static String BASE_URL = "https://api.coinmarketcap.com/v1/ticker/bitcoin";//"https://coincap.io/page/BTC";
 
 
     //returns the url to the bitcoin json price data

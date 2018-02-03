@@ -8,6 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name = "AppTheme.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+        <item name="colorPrimaryDark">@color/colorSky</item>
+
+    </style>
+
+
+
     <style name="SettingsCard">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -20,5 +32,10 @@
         <item name="android:focusable">true</item>
         <item name="android:foreground">?android:selectableItemBackground</item>
 
+    </style>
+
+    <style name="TestNoBar" parent="AppTheme">
+        <item name = "android:windowActionBar">false</item>
+        <item name = "android:windowNoTitle">true</item>
     </style>
 </resources>

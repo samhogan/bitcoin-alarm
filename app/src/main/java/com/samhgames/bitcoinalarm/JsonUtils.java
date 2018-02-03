@@ -1,5 +1,6 @@
 package com.samhgames.bitcoinalarm;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,9 +14,9 @@ public class JsonUtils
 
     public static double extractPrice(String rawJson) throws JSONException
     {
-        JSONObject reader = new JSONObject(rawJson);
+        JSONArray reader = new JSONArray(rawJson);
 
-        double price = reader.getDouble("price_usd");
+        double price = reader.getJSONObject(0).getDouble("price_usd");
         return price;
 
 
