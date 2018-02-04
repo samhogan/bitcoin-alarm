@@ -4,6 +4,7 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.RingtoneManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -147,6 +148,33 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 finish();
             }
         });
+
+    }
+
+
+    String[] ringtonesStrings, ringtonesUris;
+    public void getRingtones( )
+    {
+        RingtoneManager ringtoneMgr = new RingtoneManager(this);
+        ringtoneMgr.setType(RingtoneManager.TYPE_ALL);
+        Cursor alarmsCursor = ringtoneMgr.getCursor();
+        int alarmsCount = alarmsCursor.getCount();
+        if (alarmsCount == 0 && !alarmsCursor.moveToFirst())
+        {
+        }
+        else
+        {
+            ringtonesStrings = new String[alarmsCount];
+            ringtonesUris = new String[alarmsCount];
+            while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
+                int currentPosition = alarmsCursor.getPosition();
+                ringtonesStrings[currentPosition] =  ringtoneMgr.getRingtone(currentPosition).getTitle(getApplicationContext());
+                ringtonesUris[currentPosition] =   ringtoneMgr.getRingtoneUri(currentPosition).toString();
+
+            }
+//alarmsCursor.close();
+
+        }
 
     }
 

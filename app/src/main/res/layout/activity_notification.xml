@@ -78,7 +78,7 @@
                app:layout_constraintBottom_toTopOf="@+id/dismissBtn"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"
-               android:background="#44ffffff"/>
+               android:background="@drawable/notif_btn"/>
 
            <Button
                android:id="@+id/dismissBtn"
@@ -91,7 +91,8 @@
                app:layout_constraintBottom_toBottomOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"
-               android:background="#44ffffff"/>
+               android:background="@drawable/notif_btn"
+               android:textSize="22sp"/>
 
 
     </android.support.constraint.ConstraintLayout>
