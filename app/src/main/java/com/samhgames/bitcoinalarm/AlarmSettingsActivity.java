@@ -152,30 +152,6 @@ public class AlarmSettingsActivity extends AppCompatActivity
     }
 
 
-    String[] ringtonesStrings, ringtonesUris;
-    public void getRingtones( )
-    {
-        RingtoneManager ringtoneMgr = new RingtoneManager(this);
-        ringtoneMgr.setType(RingtoneManager.TYPE_ALL);
-        Cursor alarmsCursor = ringtoneMgr.getCursor();
-        int alarmsCount = alarmsCursor.getCount();
-        if (alarmsCount == 0 && !alarmsCursor.moveToFirst())
-        {
-        }
-        else
-        {
-            ringtonesStrings = new String[alarmsCount];
-            ringtonesUris = new String[alarmsCount];
-            while(!alarmsCursor.isAfterLast() && alarmsCursor.moveToNext()) {
-                int currentPosition = alarmsCursor.getPosition();
-                ringtonesStrings[currentPosition] =  ringtoneMgr.getRingtone(currentPosition).getTitle(getApplicationContext());
-                ringtonesUris[currentPosition] =   ringtoneMgr.getRingtoneUri(currentPosition).toString();
 
-            }
-//alarmsCursor.close();
-
-        }
-
-    }
 
 }

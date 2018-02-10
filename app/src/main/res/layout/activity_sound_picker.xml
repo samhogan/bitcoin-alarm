@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.samhgames.bitcoinalarm.SoundPicker">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/radio_sounds">
+
+            <RadioButton android:id="@+id/radio_pirates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
+                android:button="@null"
+
+                android:text="Test1"
+                android:foreground="?android:selectableItemBackground"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="0dp"
+                android:padding="15dp"
+
+                />
+
+
+        </RadioGroup>
+
+
+
+
+
+    </ScrollView>
+    <!--<FrameLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp"-->
+        <!--android:padding="30dp"-->
+
+        <!--android:foreground="?android:selectableItemBackground"-->
+        <!--android:background="?android:selectableItemBackground"-->
+        <!--android:clickable="true"-->
+        <!--&gt;-->
+        <!--<RadioButton android:id="@+id/radio_pirate5s"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Test1"-->
+            <!--android:clickable="false"-->
+
+            <!--/>-->
+
+
+    <!--</FrameLayout>-->
+</LinearLayout>
