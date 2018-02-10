@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -39,10 +40,13 @@ public class SoundPicker extends AppCompatActivity
             RadioButton radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.radio_sound, null);
             radioButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
-            radioButton.setText(ringtonesStrings[i]);
+            radioButton.setText("  " + ringtonesStrings[i]);
             radioButton.setId(i+100);
            // button.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
             radioGroup.addView(radioButton);
+
+            //View divider = (View)getLayoutInflater().inflate(R.layout.view_divider, null);
+           // radioGroup.addView(divider);
         }
 
     }

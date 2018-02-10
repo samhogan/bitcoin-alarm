@@ -11,4 +11,8 @@
     android:foreground="?android:selectableItemBackground"
     android:background="@android:color/transparent"
     android:layout_marginLeft="0dp"
-    android:padding="15dp" />
+
+    android:paddingLeft="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"/>

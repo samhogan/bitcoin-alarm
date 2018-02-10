@@ -16,22 +16,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/radio_sounds">
-
-            <RadioButton android:id="@+id/radio_pirates"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="?android:attr/listChoiceIndicatorSingle"
-                android:button="@null"
-
-                android:text="Test1"
-                android:foreground="?android:selectableItemBackground"
-                android:background="@android:color/transparent"
-                android:layout_marginLeft="0dp"
-                android:padding="15dp"
-
-                />
-
+            android:id="@+id/radio_sounds"
+            android:divider="?android:attr/dividerHorizontal"
+            android:showDividers="middle">
 
         </RadioGroup>
 
