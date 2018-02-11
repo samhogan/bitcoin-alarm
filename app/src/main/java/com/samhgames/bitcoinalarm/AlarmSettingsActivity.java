@@ -4,7 +4,9 @@ import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
     private Switch readSwitch;
     private TextView timeTextView;
+
+    private TextView soundTextView;
 
     Context context;
 
@@ -77,7 +81,9 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //create new info if a new alarm, else get it from the database
         if(newAlarm)
         {
-            info = new AlarmInfo(420, -999, true);
+            Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+            Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
+            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString());
 
         }
         else
@@ -102,6 +108,11 @@ public class AlarmSettingsActivity extends AppCompatActivity
         //show the timePicker immediately if it is a new alarm
         if(newAlarm)
             timePicker.show();
+
+        soundTextView = findViewById(R.id.sound_text);
+        soundTextView.setText(info.getSoundName());
+
+
 
     }
 

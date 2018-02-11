@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.samhgames.bitcoinalarm.AlarmSetter;
 import com.samhgames.bitcoinalarm.CoinUtils;
 import com.samhgames.bitcoinalarm.R;
+import com.samhgames.bitcoinalarm.data.AlarmInfo;
+import com.samhgames.bitcoinalarm.data.DbAccessor;
 
 import java.util.Calendar;
 
@@ -35,6 +37,16 @@ public class NotificationActivity extends AppCompatActivity
 
 
         AlarmSetter.setManager(this);
+
+        long id = getIntent().getLongExtra("ID", -1);
+
+        Log.d("Idkwhatthismeans", "" + getIntent().getIntExtra("bobby", 4));
+        Log.d("Idkwhatthismeansy", "g" + getIntent().getIntExtra("bob", 4));
+
+        AlarmInfo info = (AlarmInfo)getIntent().getSerializableExtra("Info");
+
+        Log.d("tagyoureit3", "" + (info==null));
+
 
 
         ///getSupportActionBar().hide();
@@ -54,7 +66,7 @@ public class NotificationActivity extends AppCompatActivity
        // Log.d("notif", "actually this should be obvious");
 
         //start the alarm
-        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Uri uri = Uri.parse(info.getSoundUri());
         //Ringtone ringtone = RingtoneManager.getRingtone(this, uri);//idunno about this...
         //ringtone.play();
 
@@ -81,13 +93,14 @@ public class NotificationActivity extends AppCompatActivity
         //Set click listeners for the two best buttons in the world
 
         final Context context = this;
+        final AlarmInfo coolerInfo = info;
 
         Button snoozeBtn = findViewById(R.id.snoozeBtn);
         snoozeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
                 player.stop();
-                AlarmSetter.snoozeAlarm(context);
+                AlarmSetter.snoozeAlarm(context, coolerInfo);
                 finish();
             }
         });

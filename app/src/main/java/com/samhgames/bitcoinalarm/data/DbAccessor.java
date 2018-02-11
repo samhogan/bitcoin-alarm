@@ -46,11 +46,11 @@ public class DbAccessor
         // Log.d("idk", "blah " + cursor.getCount());
         //get the time in minutes
         cursor.moveToPosition(0);
-        int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
-        boolean enabled = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_ACTIVE)) == 1;
+        AlarmInfo info = readInfo(cursor);
+
         cursor.close();
 
-        return new AlarmInfo(time, id, enabled);
+        return info;
 
     }
 
@@ -67,6 +67,8 @@ public class DbAccessor
         cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
         cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
         cv.put(DataContract.DataEntry.COLUMN_ACTIVE, info.isEnabled()?1:0);
+        cv.put(DataContract.DataEntry.COLUMN_SOUND_NAME, info.getSoundName());
+        cv.put(DataContract.DataEntry.COLUMN_SOUND_URI, info.getSoundUri());
 
         if(newAlarm)//insert it into the table
         {
@@ -99,15 +101,27 @@ public class DbAccessor
         for(int i=0; i<cursor.getCount(); i++)
         {
             cursor.moveToPosition(i);
-            int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
-            long id = cursor.getLong(cursor.getColumnIndex(DataContract.DataEntry._ID));
-            boolean enabled = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_ACTIVE)) == 1;
-            alarmList.add(new AlarmInfo(time, id, enabled));
+
+            alarmList.add(readInfo(cursor));
 
         }
 
         cursor.close();
         return alarmList;
+
+    }
+
+    //returns the alarminfo form the current position of the cursor
+    private AlarmInfo readInfo(Cursor cursor)
+    {
+        long id = cursor.getLong(cursor.getColumnIndex(DataContract.DataEntry._ID));
+        int time = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_TIME));
+        boolean enabled = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_ACTIVE)) == 1;
+        String soundName = cursor.getString(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_SOUND_NAME));
+        String soundUri = cursor.getString(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_SOUND_URI));
+
+
+        return new AlarmInfo(time, id, enabled, soundName, soundUri);
 
     }
 

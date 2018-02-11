@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "alarms.db";
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     public DbHelper(Context context)
     {
@@ -25,11 +25,14 @@ public class DbHelper extends SQLiteOpenHelper
     {
         //the query that creates the table
         final String SQL_CREATE_ALARM_TABLE = "CREATE TABLE " + DataContract.DataEntry.TABLE_NAME + " (" +
-            DataContract.DataEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-            DataContract.DataEntry.COLUMN_TIME + " INTEGER NOT NULL," +
-            DataContract.DataEntry.COLUMN_REPEAT + " INTEGER NOT NULL," +
-            DataContract.DataEntry.COLUMN_ACTIVE + " INTEGER NOT NULL," +
-            DataContract.DataEntry.COLUMN_READ_PRICE + " INTEGER NOT NULL" + ");";
+                DataContract.DataEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                DataContract.DataEntry.COLUMN_TIME + " INTEGER NOT NULL," +
+                DataContract.DataEntry.COLUMN_REPEAT + " INTEGER NOT NULL," +
+                DataContract.DataEntry.COLUMN_ACTIVE + " INTEGER NOT NULL," +
+                DataContract.DataEntry.COLUMN_READ_PRICE + " INTEGER NOT NULL, " +
+                DataContract.DataEntry.COLUMN_SOUND_NAME + " TEXT NOT NULL, " +
+                DataContract.DataEntry.COLUMN_SOUND_URI + " TEXT NOT NULL " +
+                ");";
 
         //execute the query
         sqLiteDatabase.execSQL(SQL_CREATE_ALARM_TABLE);
