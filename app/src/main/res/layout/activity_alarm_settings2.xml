@@ -61,6 +61,7 @@
 
             </android.support.v7.widget.CardView>-->
 
+
             <android.support.v7.widget.CardView
                 android:id="@+id/time_card"
                 style="@style/SettingsCard">
@@ -74,6 +75,36 @@
                     android:textSize="60sp"
                     android:gravity="center"
                     android:textColor="@color/colorAccent"/>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/sound_card"
+                style="@style/SettingsCard">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="16sp"
+                        android:textColor="#000"
+                        android:text="Sound" />
+
+                    <TextView
+                        android:id="@+id/sound_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:text="Default" />
+                </LinearLayout>
 
             </android.support.v7.widget.CardView>
 

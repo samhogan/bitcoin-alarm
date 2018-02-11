@@ -27,23 +27,5 @@
 
 
     </ScrollView>
-    <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="200dp"-->
-        <!--android:padding="30dp"-->
 
-        <!--android:foreground="?android:selectableItemBackground"-->
-        <!--android:background="?android:selectableItemBackground"-->
-        <!--android:clickable="true"-->
-        <!--&gt;-->
-        <!--<RadioButton android:id="@+id/radio_pirate5s"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Test1"-->
-            <!--android:clickable="false"-->
-
-            <!--/>-->
-
-
-    <!--</FrameLayout>-->
 </LinearLayout>

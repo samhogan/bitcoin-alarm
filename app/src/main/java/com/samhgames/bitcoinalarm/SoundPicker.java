@@ -1,7 +1,11 @@
 package com.samhgames.bitcoinalarm;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,13 +21,32 @@ public class SoundPicker extends AppCompatActivity
 
     RadioGroup radioGroup;
 
+    MediaPlayer player;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sound_picker);
 
+        final Context context = this;
+
+
+
         radioGroup = findViewById(R.id.radio_sounds);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                stopPlayer();
+                Uri uri = Uri.parse(ringtonesUris[checkedId-100]);
+                player = MediaPlayer.create(context, uri);
+                player.setLooping(true);
+                player.start();
+
+            }
+        });
 
         getRingtones();
         setRadioButtons();
@@ -31,6 +54,28 @@ public class SoundPicker extends AppCompatActivity
 
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        stopPlayer();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        stopPlayer();
+    }
+
+    void stopPlayer()
+    {
+        if(player!=null && player.isPlaying())
+        {
+            player.stop();
+            player.reset();
+        }
+    }
 
     public void setRadioButtons()
     {
