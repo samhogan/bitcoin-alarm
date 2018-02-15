@@ -1,6 +1,7 @@
 package com.samhgames.bitcoinalarm;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.media.Ringtone;
@@ -8,6 +9,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -45,6 +48,8 @@ public class SoundPicker extends AppCompatActivity
                 player.setLooping(true);
                 player.start();
 
+
+
             }
         });
 
@@ -79,10 +84,10 @@ public class SoundPicker extends AppCompatActivity
 
     public void setRadioButtons()
     {
-        //RadioButton button;
+        RadioButton radioButton;
         for(int i = 0; i < ringtonesStrings.length; i++)
         {
-            RadioButton radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.radio_sound, null);
+            radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.radio_sound, null);
             radioButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
             radioButton.setText("  " + ringtonesStrings[i]);
@@ -124,5 +129,31 @@ public class SoundPicker extends AppCompatActivity
     }
 
 
+
+
+    public void onBackPressed()
+    {
+        int checkedId = radioGroup.getCheckedRadioButtonId();
+        if(checkedId>0)
+        {
+            Intent intent = new Intent();
+            intent.putExtra("soundName", ringtonesStrings[checkedId - 100]);
+            intent.putExtra("soundUri", ringtonesUris[checkedId - 100]);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return true;
+    }
 
 }

@@ -3,12 +3,14 @@ package com.samhgames.bitcoinalarm;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Switch;
@@ -160,11 +162,38 @@ public class AlarmSettingsActivity extends AppCompatActivity
             }
         });
 
+        //open the sound picker
+        findViewById(R.id.sound_card).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                Intent i = new Intent(getBaseContext(), SoundPicker.class);
+                startActivityForResult(i, 1);
+                //startActivity(i);
+            }
+        });
 
 
 
     }
 
+
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("wow", "oh ok i see " + resultCode);
+
+
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK) {
+                Log.d("wow", "oh ok i seesfd " + resultCode);
+
+                info.setSoundName(data.getStringExtra("soundName"));
+                info.setSoundUri(data.getStringExtra("soundUri"));
+                soundTextView.setText(info.getSoundName());
+            }
+        }
+    }
 
 
 
