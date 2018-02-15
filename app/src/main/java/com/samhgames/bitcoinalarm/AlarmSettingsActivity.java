@@ -128,17 +128,6 @@ public class AlarmSettingsActivity extends AppCompatActivity
        // createRepeatDialog();
 
 
-        boolean[] a1 = {false, false, false};
-        boolean[] a2 = a1.clone();
-        boolean[] a3 = Arrays.copyOf(a1, 3);
-
-        a1[0] = true;
-
-        Log.d("arraytest", "a1[0] == " + a1[0]);
-        Log.d("arraytest", "a2[0] == " + a2[0]);
-        Log.d("arraytest", "a3[0] == " + a3[0]);
-
-
     }
 
     //set the top time text
@@ -260,12 +249,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     void createRepeatDialog()
     {
 
-        tempDays = Arrays.copyOf(info.getDaysArray(), 7);
-
-        //final ArrayList<Integer> selected = new ArrayList<Integer>();
-
-        Log.d("test", "sunday is checked: " + info.getDaysArray()[0]);
-        Log.d("test", "are arrays equal" + (tempDays == info.getDaysArray()));
+        tempDays = info.getDaysArray().clone();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Repeat")
@@ -277,8 +261,6 @@ public class AlarmSettingsActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which,
                                                 boolean isChecked) {
 
-                                tempDays[which] = isChecked;
-                                Log.d("test", "sunday is checked2: " + info.getDaysArray()[0]);
 
                             }
                         })
@@ -289,7 +271,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
                         // User clicked OK, so save the mSelectedItems results somewhere
                         // or return them to the component that opened the dialog
 
-                        info.setDaysArray(tempDays);
+                        //set the info
+                        info.setDaysArray(tempDays.clone());
 
                     }
                 })
@@ -297,12 +280,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int id)
                     {
-//                        tempDays = info.getDaysArray().clone();
-//
-//                        for(int i=0; i<7; i++)
-//                        {
-//                            repeatDialog.getListView().setItemChecked(i, tempDays[i]);
-//                        }
+
                     }
                 });
 
