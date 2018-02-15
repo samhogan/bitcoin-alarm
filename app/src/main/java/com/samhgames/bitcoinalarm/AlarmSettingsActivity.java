@@ -167,8 +167,14 @@ public class AlarmSettingsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent i = new Intent(getBaseContext(), SoundPicker.class);
-                startActivityForResult(i, 1);
+                //startActivityForResult(i, 1);
                 //startActivity(i);
+
+                Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(info.getSoundUri()));
+                startActivityForResult(intent, 5);
             }
         });
 
@@ -181,17 +187,39 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("wow", "oh ok i see " + resultCode);
+        //Log.d("wow", "oh ok i see " + resultCode);
 
 
-        if (requestCode == 1) {
-            if(resultCode == RESULT_OK) {
-                Log.d("wow", "oh ok i seesfd " + resultCode);
+//        if (requestCode == 1) {
+//            if(resultCode == RESULT_OK) {
+//                //Log.d("wow", "oh ok i seesfd " + resultCode);
+//
+//                info.setSoundName(data.getStringExtra("soundName"));
+//                info.setSoundUri(data.getStringExtra("soundUri"));
+//                soundTextView.setText(info.getSoundName());
+//            }
+//        }
 
-                info.setSoundName(data.getStringExtra("soundName"));
-                info.setSoundUri(data.getStringExtra("soundUri"));
-                soundTextView.setText(info.getSoundName());
+        if (resultCode == RESULT_OK && requestCode == 5)
+        {
+            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+
+            if (uri != null)
+            {
+                info.setSoundUri(uri.toString());
+                info.setSoundName(RingtoneManager.getRingtone(this, uri).getTitle(this));
+
+
             }
+            else
+            {
+                //this.chosenRingtone = null;
+                info.setSoundName("None");
+                info.setSoundUri("null");
+            }
+
+            soundTextView.setText(info.getSoundName());
+
         }
     }
 

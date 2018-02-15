@@ -9,6 +9,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -120,6 +121,7 @@ public class SoundPicker extends AppCompatActivity
                 int currentPosition = alarmsCursor.getPosition();
                 ringtonesStrings[currentPosition] =  ringtoneMgr.getRingtone(currentPosition).getTitle(getApplicationContext());
                 ringtonesUris[currentPosition] =   ringtoneMgr.getRingtoneUri(currentPosition).toString();
+                Log.d("wow", "yeah this is here yo");
 
             }
 //alarmsCursor.close();

@@ -40,8 +40,8 @@ public class NotificationActivity extends AppCompatActivity
 
         long id = getIntent().getLongExtra("ID", -1);
 
-        Log.d("Idkwhatthismeans", "" + getIntent().getIntExtra("bobby", 4));
-        Log.d("Idkwhatthismeansy", "g" + getIntent().getIntExtra("bob", 4));
+       // Log.d("Idkwhatthismeans", "" + getIntent().getIntExtra("bobby", 4));
+        //Log.d("Idkwhatthismeansy", "g" + getIntent().getIntExtra("bob", 4));
 
         AlarmInfo info = (AlarmInfo)getIntent().getSerializableExtra("Info");
 
@@ -71,7 +71,7 @@ public class NotificationActivity extends AppCompatActivity
         //ringtone.play();
 
         player = MediaPlayer.create(this, uri);
-        player.setLooping(false);
+        player.setLooping(true);
         player.start();
 
         //shut off after 3 seconds
