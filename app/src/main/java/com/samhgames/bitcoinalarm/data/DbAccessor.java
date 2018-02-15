@@ -121,7 +121,7 @@ public class DbAccessor
         String soundUri = cursor.getString(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_SOUND_URI));
 
 
-        return new AlarmInfo(time, id, enabled, soundName, soundUri);
+        return new AlarmInfo(time, id, enabled, soundName, soundUri, 0);
 
     }
 

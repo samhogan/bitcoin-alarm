@@ -1,8 +1,10 @@
 package com.samhgames.bitcoinalarm;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.Ringtone;
@@ -20,6 +22,9 @@ import android.widget.TimePicker;
 import com.samhgames.bitcoinalarm.data.AlarmInfo;
 import com.samhgames.bitcoinalarm.data.DataContract;
 import com.samhgames.bitcoinalarm.data.DbAccessor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class AlarmSettingsActivity extends AppCompatActivity
 {
@@ -41,6 +46,11 @@ public class AlarmSettingsActivity extends AppCompatActivity
     private TextView soundTextView;
 
     Context context;
+
+
+
+    //temporarily stores the days the user is picking, (reverted back if cancelled)
+    boolean[] tempDays;
 
     //int time;
    // int hours;
@@ -85,7 +95,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
         {
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString());
+            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString(), 0);
 
         }
         else
@@ -114,6 +124,19 @@ public class AlarmSettingsActivity extends AppCompatActivity
         soundTextView = findViewById(R.id.sound_text);
         soundTextView.setText(info.getSoundName());
 
+
+       // createRepeatDialog();
+
+
+        boolean[] a1 = {false, false, false};
+        boolean[] a2 = a1.clone();
+        boolean[] a3 = Arrays.copyOf(a1, 3);
+
+        a1[0] = true;
+
+        Log.d("arraytest", "a1[0] == " + a1[0]);
+        Log.d("arraytest", "a2[0] == " + a2[0]);
+        Log.d("arraytest", "a3[0] == " + a3[0]);
 
 
     }
@@ -178,6 +201,13 @@ public class AlarmSettingsActivity extends AppCompatActivity
             }
         });
 
+        findViewById(R.id.repeat_card).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+               //repeatDialog.show();
+                createRepeatDialog();
+            }
+        });
 
 
     }
@@ -221,6 +251,62 @@ public class AlarmSettingsActivity extends AppCompatActivity
             soundTextView.setText(info.getSoundName());
 
         }
+    }
+
+
+
+
+
+    void createRepeatDialog()
+    {
+
+        tempDays = Arrays.copyOf(info.getDaysArray(), 7);
+
+        //final ArrayList<Integer> selected = new ArrayList<Integer>();
+
+        Log.d("test", "sunday is checked: " + info.getDaysArray()[0]);
+        Log.d("test", "are arrays equal" + (tempDays == info.getDaysArray()));
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Repeat")
+                // Specify the list array, the items to be selected by default (null for none),
+                // and the listener through which to receive callbacks when items are selected
+                .setMultiChoiceItems(R.array.days, tempDays,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which,
+                                                boolean isChecked) {
+
+                                tempDays[which] = isChecked;
+                                Log.d("test", "sunday is checked2: " + info.getDaysArray()[0]);
+
+                            }
+                        })
+                // Set the action buttons
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK, so save the mSelectedItems results somewhere
+                        // or return them to the component that opened the dialog
+
+                        info.setDaysArray(tempDays);
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+//                        tempDays = info.getDaysArray().clone();
+//
+//                        for(int i=0; i<7; i++)
+//                        {
+//                            repeatDialog.getListView().setItemChecked(i, tempDays[i]);
+//                        }
+                    }
+                });
+
+        builder.create().show();
     }
 
 

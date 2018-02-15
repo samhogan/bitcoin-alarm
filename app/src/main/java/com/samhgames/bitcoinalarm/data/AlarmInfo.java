@@ -9,20 +9,25 @@ import java.io.Serializable;
 //holds data temporarily for a single alarm while it is being edited
 public class AlarmInfo implements Serializable
 {
-    private int time, minutes, hours;
+    private int time, minutes, hours, days;
     private boolean enabled;
 
     private String soundName, soundUri;
 
     private long id;
 
-    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri)
+    private boolean[] daysArray;
+
+    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri, int _days)
     {
         setTime(_time);
         id = _id;
         enabled = _enabled;
         soundName = _soundName;
         soundUri = _soundUri;
+        days = _days;
+
+        daysArray = new boolean[7];
 
     }
 
@@ -47,7 +52,29 @@ public class AlarmInfo implements Serializable
 
     public int getMinutes(){return minutes;}
 
+
+
     public int getHours() {return hours;}
+
+    public int getDays()
+    {
+        return days;
+    }
+
+    public void setDays(int days)
+    {
+        this.days = days;
+    }
+
+    public boolean[] getDaysArray()
+    {
+        return daysArray;
+    }
+
+    public void setDaysArray(boolean[] daysArray)
+    {
+        this.daysArray = daysArray;
+    }
 
     public boolean isEnabled()
     {
