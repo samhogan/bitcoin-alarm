@@ -1,5 +1,6 @@
 package com.samhgames.bitcoinalarm.data;
 
+
 import java.io.Serializable;
 
 /**
@@ -9,7 +10,7 @@ import java.io.Serializable;
 //holds data temporarily for a single alarm while it is being edited
 public class AlarmInfo implements Serializable
 {
-    private int time, minutes, hours, days;
+    private int time, minutes, hours;
     private boolean enabled;
 
     private String soundName, soundUri;
@@ -18,16 +19,16 @@ public class AlarmInfo implements Serializable
 
     private boolean[] daysArray;
 
-    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri, int _days)
+    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri, int days)
     {
         setTime(_time);
         id = _id;
         enabled = _enabled;
         soundName = _soundName;
         soundUri = _soundUri;
-        days = _days;
+        setDaysArray(days);
 
-        daysArray = new boolean[7];
+
 
     }
 
@@ -56,14 +57,34 @@ public class AlarmInfo implements Serializable
 
     public int getHours() {return hours;}
 
-    public int getDays()
+    public int getDaysInt()
     {
-        return days;
+        int num = 0;
+        for(int i=0; i<7; i++)
+        {
+            num = num+ (daysArray[i]?1:0)*(1<<i);
+        }
+
+        return num;
     }
 
-    public void setDays(int days)
+    public void setDaysArray(int days)
     {
-        this.days = days;
+        daysArray = new boolean[7];
+
+//        daysArray[0] = (days&1)!=0;//sunday
+//        daysArray[1] = (days&2)!=0;//MONDAY
+//        daysArray[2] = (days&4)!=0;
+//        daysArray[3] = (days&8)!=0;
+//        daysArray[4] = (days&16)!=0;
+//        daysArray[5] = (days&32)!=0;
+//        daysArray[6] = (days&64)!=0;
+
+        for(int i=0; i<7; i++)
+        {
+            daysArray[i] = (days&(1<<i))!=0;
+        }
+
     }
 
     public boolean[] getDaysArray()

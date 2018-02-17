@@ -33,5 +33,14 @@
 
     <!-- -->
 
+    <string name="sun_abb">Sun</string>
+    <string name="mon_abb">Mon</string>
+    <string name="tue_abb">Tue</string>
+    <string name="wed_abb">Wed</string>
+    <string name="thu_abb">Thu</string>
+    <string name="fri_abb">Fri</string>
+    <string name="sat_abb">Sat</string>
+
+
 
 </resources>

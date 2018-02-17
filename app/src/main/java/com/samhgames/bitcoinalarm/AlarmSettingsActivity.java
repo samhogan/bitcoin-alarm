@@ -41,9 +41,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     private long id;
 
     private Switch readSwitch;
-    private TextView timeTextView;
-
-    private TextView soundTextView;
+    private TextView timeTextView, soundTextView, repeatSummary;
 
     Context context;
 
@@ -127,6 +125,9 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
        // createRepeatDialog();
 
+        repeatSummary = findViewById(R.id.repeat_summary);
+        repeatSummary.setText(TimeConverter.getDayText(info.getDaysArray()));
+
 
     }
 
@@ -194,7 +195,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                //repeatDialog.show();
-                createRepeatDialog();
+                showRepeatDialog();
             }
         });
 
@@ -245,11 +246,15 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
 
 
-
-    void createRepeatDialog()
+    //creates and displays the day of week dialog
+    void showRepeatDialog()
     {
 
         tempDays = info.getDaysArray().clone();
+        Log.d("days", "set days real"+ info.getDaysArray()[6]);
+
+        Log.d("days", "set days temp"+ tempDays[6]);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Repeat")
@@ -273,6 +278,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
                         //set the info
                         info.setDaysArray(tempDays.clone());
+                        repeatSummary.setText(TimeConverter.getDayText(info.getDaysArray()));
+
 
                     }
                 })

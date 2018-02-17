@@ -19,6 +19,7 @@ public class DataContract
         public static final String COLUMN_ACTIVE = "active";
         public static final String COLUMN_SOUND_NAME = "soundName";
         public static final String COLUMN_SOUND_URI = "soundUri";
+        public static final String COLUMN_DAYS = "days";
 
 
 

@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "alarms.db";
 
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     public DbHelper(Context context)
     {
@@ -31,7 +31,8 @@ public class DbHelper extends SQLiteOpenHelper
                 DataContract.DataEntry.COLUMN_ACTIVE + " INTEGER NOT NULL," +
                 DataContract.DataEntry.COLUMN_READ_PRICE + " INTEGER NOT NULL, " +
                 DataContract.DataEntry.COLUMN_SOUND_NAME + " TEXT NOT NULL, " +
-                DataContract.DataEntry.COLUMN_SOUND_URI + " TEXT NOT NULL " +
+                DataContract.DataEntry.COLUMN_SOUND_URI + " TEXT NOT NULL, " +
+                DataContract.DataEntry.COLUMN_DAYS + " INTEGER NOT NULL " +
                 ");";
 
         //execute the query
