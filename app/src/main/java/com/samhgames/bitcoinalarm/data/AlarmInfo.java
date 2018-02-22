@@ -15,6 +15,7 @@ public class AlarmInfo implements Serializable
 
     private String soundName, soundUri;
 
+    //the id for the database, NOT for the alarmManager, that is the time
     private long id;
 
     private boolean[] daysArray;

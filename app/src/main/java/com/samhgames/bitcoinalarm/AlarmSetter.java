@@ -37,7 +37,9 @@ public class AlarmSetter
     {
 
         //the id for the alarmmanager to distinguish this alarm
-        int intentID = (int)info.getId()*2;
+        //id is the time in minutes unless its a snooze
+        //this is NOT the database ID
+        int intentID = (int)info.getTime()*2;
 
         Intent myIntent = new Intent(context, NotificationReceiver.class);
 
@@ -46,8 +48,6 @@ public class AlarmSetter
         args.putSerializable("Info",(Serializable)info);
         myIntent.putExtra("InfoBundle",args);
 
-        Log.d("tagyoureit", "" + (info==null));
-        myIntent.putExtra("bob", 8);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intentID, myIntent, 0);
 
 
@@ -80,6 +80,8 @@ public class AlarmSetter
 
     public static void snoozeAlarm(Context context, AlarmInfo info)
     {
+        //set the time (serves as the AlarmManager ID) to something other than the actual time so a repeating alarm is not overwritten
+        info.setTime(100000000);
         setAlarm(Calendar.getInstance().getTimeInMillis()+1000*60*1, info, context);
     }
 

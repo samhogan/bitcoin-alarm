@@ -75,7 +75,7 @@ public class DbAccessor
         {
             //returns the id
             long id = mDb.insert(DataContract.DataEntry.TABLE_NAME, null, cv);
-            info.setId(id);
+           // info.setId(id);
         }
         else//update it
         {

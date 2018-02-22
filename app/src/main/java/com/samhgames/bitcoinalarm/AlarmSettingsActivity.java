@@ -160,6 +160,11 @@ public class AlarmSettingsActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 db.saveAlarm(info, newAlarm);
+
+//                //if this alarm is
+//                if(!newAlarm && info.isEnabled())
+//                    AlarmSetter.cancelAlarm(info, context);
+
                 //save alarm also sets the id in info
                 AlarmSetter.setAlarm(info, context);
                 finish();
