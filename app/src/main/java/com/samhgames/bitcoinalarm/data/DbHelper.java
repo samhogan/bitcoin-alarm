@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "alarms.db";
 
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 7;
 
     public DbHelper(Context context)
     {
@@ -27,12 +27,12 @@ public class DbHelper extends SQLiteOpenHelper
         final String SQL_CREATE_ALARM_TABLE = "CREATE TABLE " + DataContract.DataEntry.TABLE_NAME + " (" +
                 DataContract.DataEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 DataContract.DataEntry.COLUMN_TIME + " INTEGER NOT NULL," +
-                DataContract.DataEntry.COLUMN_REPEAT + " INTEGER NOT NULL," +
                 DataContract.DataEntry.COLUMN_ACTIVE + " INTEGER NOT NULL," +
                 DataContract.DataEntry.COLUMN_READ_PRICE + " INTEGER NOT NULL, " +
                 DataContract.DataEntry.COLUMN_SOUND_NAME + " TEXT NOT NULL, " +
                 DataContract.DataEntry.COLUMN_SOUND_URI + " TEXT NOT NULL, " +
-                DataContract.DataEntry.COLUMN_DAYS + " INTEGER NOT NULL " +
+                DataContract.DataEntry.COLUMN_DAYS + " INTEGER NOT NULL, " +
+                DataContract.DataEntry.COLUMN_DATE + " INTEGER NOT NULL " +
                 ");";
 
         //execute the query

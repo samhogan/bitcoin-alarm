@@ -15,11 +15,11 @@ public class DataContract
 
         public static final String COLUMN_TIME = "time";
         public static final String COLUMN_READ_PRICE = "readPrice";
-        public static final String COLUMN_REPEAT = "repeat";
         public static final String COLUMN_ACTIVE = "active";
         public static final String COLUMN_SOUND_NAME = "soundName";
         public static final String COLUMN_SOUND_URI = "soundUri";
         public static final String COLUMN_DAYS = "days";
+        public static final String COLUMN_DATE = "date";
 
 
 

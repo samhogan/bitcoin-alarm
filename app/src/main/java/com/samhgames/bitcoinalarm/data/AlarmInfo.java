@@ -10,6 +10,7 @@ import java.io.Serializable;
 //holds data temporarily for a single alarm while it is being edited
 public class AlarmInfo implements Serializable
 {
+    //time is the time in minutes since 12 am, minutes and hours can be derived from it
     private int time, minutes, hours;
     private boolean enabled;
 
@@ -20,7 +21,10 @@ public class AlarmInfo implements Serializable
 
     private boolean[] daysArray;
 
-    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri, int days)
+    //milliseconds since the epoch, for one time alarms, acts as the date in case the phone is rebooted, and the alarm time has already passed
+    private long millis;
+
+    public AlarmInfo(int _time, long _id, boolean _enabled, String _soundName, String _soundUri, int days, long _millis)
     {
         setTime(_time);
         id = _id;
@@ -28,8 +32,7 @@ public class AlarmInfo implements Serializable
         soundName = _soundName;
         soundUri = _soundUri;
         setDaysArray(days);
-
-
+        millis = _millis;
 
     }
 
@@ -126,5 +129,15 @@ public class AlarmInfo implements Serializable
     public void setSoundUri(String soundUri)
     {
         this.soundUri = soundUri;
+    }
+
+    public long getMillis()
+    {
+        return millis;
+    }
+
+    public void setMillis(long millis)
+    {
+        this.millis = millis;
     }
 }

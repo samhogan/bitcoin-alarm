@@ -60,16 +60,17 @@ public class DbAccessor
         //time = time
         //encode all the data to be saved
         int readNum = 1;//readSwitch.isChecked() ? 1:0;
-        int repeatNum = 5;
+        //int repeatNum = 5;
 
         ContentValues cv = new ContentValues();
         cv.put(DataContract.DataEntry.COLUMN_TIME, info.getTime());
         cv.put(DataContract.DataEntry.COLUMN_READ_PRICE, readNum);
-        cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
+//        cv.put(DataContract.DataEntry.COLUMN_REPEAT, repeatNum);
         cv.put(DataContract.DataEntry.COLUMN_ACTIVE, info.isEnabled()?1:0);
         cv.put(DataContract.DataEntry.COLUMN_SOUND_NAME, info.getSoundName());
         cv.put(DataContract.DataEntry.COLUMN_SOUND_URI, info.getSoundUri());
         cv.put(DataContract.DataEntry.COLUMN_DAYS, info.getDaysInt());
+        cv.put(DataContract.DataEntry.COLUMN_DATE, info.getMillis());
 
         if(newAlarm)//insert it into the table
         {
@@ -122,9 +123,10 @@ public class DbAccessor
         String soundUri = cursor.getString(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_SOUND_URI));
 
         int days = cursor.getInt(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_DAYS));
+        long millis = cursor.getLong(cursor.getColumnIndex(DataContract.DataEntry.COLUMN_DATE));
 
 
-        return new AlarmInfo(time, id, enabled, soundName, soundUri, days);
+        return new AlarmInfo(time, id, enabled, soundName, soundUri, days, millis);
 
     }
 

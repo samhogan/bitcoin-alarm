@@ -102,13 +102,16 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
                     if(info.isEnabled()!=isChecked)//so this is not called when set initially
                     {
                         info.setEnabled(isChecked);
-                        db.saveAlarm(info, false);//save to database
 
                         //cancel or set pendingintent in alarmmanager
                         if(isChecked)
                             AlarmSetter.setAlarm(info, context);
                         else
                             AlarmSetter.cancelAlarm(info, context);
+
+
+                        db.saveAlarm(info, false);//save to database
+
                     }
                 }
             });

@@ -64,6 +64,9 @@ public class AlarmSetter
         alarmManager.set(AlarmManager.RTC_WAKEUP, time-60000, prePendingIntent);
 
 
+        //set the milliseconds in the alarmInfo, which will be saved and used if the device is rebooted to determine if the date the alarm should have gone off has passed
+        info.setMillis(time);
+
     }
 
     public static void setAlarm(AlarmInfo info, Context context)
@@ -91,6 +94,9 @@ public class AlarmSetter
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int)info.getId(), myIntent, 0);
 
         pendingIntent.cancel();
+
+        //dont really need this, but if something goes wrong, this alarm is sure to be cancelled
+        info.setMillis(0);
 
     }
 

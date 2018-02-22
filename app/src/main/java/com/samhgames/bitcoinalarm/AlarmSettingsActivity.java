@@ -93,7 +93,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
         {
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString(), 0);
+            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString(), 0, 0);
 
         }
         else
@@ -159,14 +159,17 @@ public class AlarmSettingsActivity extends AppCompatActivity
         saveBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)
             {
-                db.saveAlarm(info, newAlarm);
 
 //                //if this alarm is
 //                if(!newAlarm && info.isEnabled())
 //                    AlarmSetter.cancelAlarm(info, context);
 
-                //save alarm also sets the id in info
+                //set alarm also sets the milliseconds that acts as a date in info
                 AlarmSetter.setAlarm(info, context);
+
+                db.saveAlarm(info, newAlarm);
+
+
                 finish();
             }
         });
