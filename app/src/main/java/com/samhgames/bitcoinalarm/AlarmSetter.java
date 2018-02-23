@@ -77,6 +77,14 @@ public class AlarmSetter
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, info.getHours());
         calendar.set(Calendar.MINUTE, info.getMinutes());
+
+        //if the time today has passed, set it to tomorrow
+        if(calendar.compareTo(Calendar.getInstance()) <= 0)
+        {
+            //Today Set time passed, count to tomorrow
+            calendar.add(Calendar.DATE, 1);
+        }
+
         setAlarm(calendar.getTimeInMillis(), info, context);
 
     }

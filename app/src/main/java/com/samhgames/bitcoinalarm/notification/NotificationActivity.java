@@ -118,6 +118,15 @@ public class NotificationActivity extends AppCompatActivity
         TextView priceText = findViewById(R.id.price_text);
         String price = "$" + CoinUtils.getSavedPrice(this);
         priceText.setText(price);
+
+
+        //if this alarm is not repeating, and its not a snooze, disable it (just for the visual switch)
+        if(info.isEnabled() && info.getDaysInt()==0)
+        {
+            info.setEnabled(false);
+            new DbAccessor(this).saveAlarm(info, false);
+
+        }
     }
 
 

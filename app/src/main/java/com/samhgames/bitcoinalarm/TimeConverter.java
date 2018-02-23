@@ -1,5 +1,9 @@
 package com.samhgames.bitcoinalarm;
 
+import com.samhgames.bitcoinalarm.data.AlarmInfo;
+
+import java.util.Calendar;
+
 /**
  * Created by samho on 1/14/2018.
  */
@@ -34,8 +38,10 @@ public class TimeConverter
 
     static String[] dayAbs = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
-    public static String getDayText(boolean[] days)
+    public static String getDayText(AlarmInfo info)
     {
+        boolean[] days = info.getDaysArray();
+
         String dayString = "";
         int num = 0;
         for(int i=0; i<7; i++)
@@ -55,8 +61,19 @@ public class TimeConverter
         if(num==127-65)
             return "Weekdays";
 
+        //a bit more complicated
         if(num==0)
-            return "Today or Tomorrow or sm";
+        {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, info.getHours());
+            calendar.set(Calendar.MINUTE, info.getMinutes());
+
+            //if the time today has passed, set it to tomorrow
+            if(calendar.compareTo(Calendar.getInstance()) <= 0)
+                return "Tomorrow";
+            else
+                return "Today";
+        }
 
         return dayString;
 

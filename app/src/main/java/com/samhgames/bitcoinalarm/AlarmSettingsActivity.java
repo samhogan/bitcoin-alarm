@@ -112,6 +112,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             {
                 info.setTime(selectedHour*60 + selectedMinute);
                 setTimeText(selectedHour, selectedMinute);
+                repeatSummary.setText(TimeConverter.getDayText(info));
             }
         }, info.getHours(), info.getMinutes(), false);
 
@@ -126,7 +127,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
        // createRepeatDialog();
 
         repeatSummary = findViewById(R.id.repeat_summary);
-        repeatSummary.setText(TimeConverter.getDayText(info.getDaysArray()));
+        repeatSummary.setText(TimeConverter.getDayText(info));
 
 
     }
@@ -192,7 +193,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 //startActivity(i);
 
                 Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
-                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
+                intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
                 intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(info.getSoundUri()));
                 startActivityForResult(intent, 5);
@@ -286,7 +287,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
                         //set the info
                         info.setDaysArray(tempDays.clone());
-                        repeatSummary.setText(TimeConverter.getDayText(info.getDaysArray()));
+                        repeatSummary.setText(TimeConverter.getDayText(info));
 
 
                     }
