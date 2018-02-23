@@ -33,9 +33,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.samhgames.bitcoinalarm.MainActivity" />
         </activity>
-        <activity android:name=".AlarmSettingsActivity"
-            android:launchMode="singleTop"
-            />
+        <activity
+            android:name=".AlarmSettingsActivity"
+            android:launchMode="singleTop" />
 
         <receiver
             android:name=".notification.NotificationReceiver"
@@ -66,12 +66,28 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.samhgames.bitcoinalarm.AlarmSettingsActivity" />
         </activity>
-        <activity android:name=".TestActivity" android:parentActivityName=".AlarmSettingsActivity">
+        <activity
+            android:name=".TestActivity"
+            android:parentActivityName=".AlarmSettingsActivity">
 
             <!-- The meta-data element is needed for versions lower than 4.1 -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.samhgames.bitcoinalarm.AlarmSettingsActivity" /></activity>
+                android:value="com.samhgames.bitcoinalarm.AlarmSettingsActivity" />
+        </activity>
+
+        <receiver
+            android:name=".RestartAlarmsReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".RestartAlarmsService"
+            android:exported="false"></service>
     </application>
 
 </manifest>
