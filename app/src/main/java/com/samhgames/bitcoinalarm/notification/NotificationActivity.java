@@ -129,5 +129,21 @@ public class NotificationActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        player.stop();
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        player.stop();
+        //finish();
+    }
+
+
 
 }

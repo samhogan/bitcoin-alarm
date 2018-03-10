@@ -47,13 +47,13 @@ public class RestartAlarmsService extends IntentService
                     if(alarm.getMillis()>currentMilis)
                     {
                         AlarmSetter.setAlarm(alarm, this);
-                        Log.d("AlarmRestarter", "Alarm reset");
+                        //Log.d("AlarmRestarter", "Alarm reset");
                     }
                     else//time passed
                     {
                         alarm.setEnabled(false);
                         db.saveAlarm(alarm, false);
-                        Log.d("AlarmRestarter", "Alarm canceled");
+                        //Log.d("AlarmRestarter", "Alarm canceled");
 
                     }
 

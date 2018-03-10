@@ -46,6 +46,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
     Context context;
 
 
+    AlarmInfo originalInfo;//for cancelling alarms if the time changes
 
     //temporarily stores the days the user is picking, (reverted back if cancelled)
     boolean[] tempDays;
@@ -130,6 +131,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
         repeatSummary.setText(TimeConverter.getDayText(info));
 
 
+        originalInfo = new AlarmInfo(info.getTime(), -2345, true, "test", "test", info.getDaysInt(), 0);
+
     }
 
     //set the top time text
@@ -161,9 +164,9 @@ public class AlarmSettingsActivity extends AppCompatActivity
             public void onClick(View v)
             {
 
-//                //if this alarm is
-//                if(!newAlarm && info.isEnabled())
-//                    AlarmSetter.cancelAlarm(info, context);
+                //if this alarm is
+                if(!newAlarm && info.isEnabled())
+                    AlarmSetter.cancelAlarm(originalInfo, context);
 
                 //set alarm also sets the milliseconds that acts as a date in info
                 AlarmSetter.setAlarm(info, context);

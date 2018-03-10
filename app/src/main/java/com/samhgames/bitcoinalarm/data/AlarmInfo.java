@@ -140,4 +140,9 @@ public class AlarmInfo implements Serializable
     {
         this.millis = millis;
     }
+
+    public boolean isRepeating()
+    {
+        return getDaysInt()>0;
+    }
 }
