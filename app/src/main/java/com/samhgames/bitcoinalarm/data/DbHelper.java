@@ -13,7 +13,7 @@ public class DbHelper extends SQLiteOpenHelper
 {
     private static final String DATABASE_NAME = "alarms.db";
 
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 8;
 
     public DbHelper(Context context)
     {

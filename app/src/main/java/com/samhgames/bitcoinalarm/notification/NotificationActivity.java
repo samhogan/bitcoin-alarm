@@ -2,6 +2,7 @@ package com.samhgames.bitcoinalarm.notification;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.samhgames.bitcoinalarm.R;
 import com.samhgames.bitcoinalarm.data.AlarmInfo;
 import com.samhgames.bitcoinalarm.data.DbAccessor;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class NotificationActivity extends AppCompatActivity
@@ -45,7 +47,7 @@ public class NotificationActivity extends AppCompatActivity
 
         AlarmInfo info = (AlarmInfo)getIntent().getSerializableExtra("Info");
 
-        Log.d("tagyoureit3", "" + (info==null));
+        //Log.d("tagyoureit3", "" + (info==null));
 
 
 
@@ -70,9 +72,17 @@ public class NotificationActivity extends AppCompatActivity
         //Ringtone ringtone = RingtoneManager.getRingtone(this, uri);//idunno about this...
         //ringtone.play();
 
-        player = MediaPlayer.create(this, uri);
+        player = new MediaPlayer();
+        player.setAudioStreamType(AudioManager.STREAM_ALARM);
         player.setLooping(true);
+        try {
+            player.setDataSource(this,uri);
+            player.prepare();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         player.start();
+
 
         //shut off after 3 seconds
         new CountDownTimer(30000, 1000) {
@@ -121,12 +131,12 @@ public class NotificationActivity extends AppCompatActivity
 
 
         //if this alarm is not repeating, and its not a snooze, disable it (just for the visual switch)
-        if(info.isEnabled() && info.getDaysInt()==0)
-        {
+        //if(info.isEnabled())// && info.getDaysInt()==0)
+        //{
             info.setEnabled(false);
             new DbAccessor(this).saveAlarm(info, false);
 
-        }
+       // }
     }
 
     @Override

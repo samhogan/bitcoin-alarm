@@ -25,6 +25,7 @@ import com.samhgames.bitcoinalarm.data.DbAccessor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 
 public class AlarmSettingsActivity extends AppCompatActivity
 {
@@ -80,7 +81,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             newAlarm = true;
 
 
-        readSwitch = (Switch)findViewById(R.id.read_switch);
+        //readSwitch = (Switch)findViewById(R.id.read_switch);
         timeTextView = (TextView)findViewById(R.id.tv_time);
 
         setClickListeners();
@@ -89,12 +90,17 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
         db = new DbAccessor(this);
 
+
+
         //create new info if a new alarm, else get it from the database
         if(newAlarm)
         {
+            //current time
+            Calendar c = Calendar.getInstance();
+
             Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             Ringtone ringtone = RingtoneManager.getRingtone(this, uri);
-            info = new AlarmInfo(420, -999, true, ringtone.getTitle(this), uri.toString(), 0, 0);
+            info = new AlarmInfo(c.get(Calendar.HOUR)*60+c.get(Calendar.MINUTE), -999, true, ringtone.getTitle(this), uri.toString(), 0, 0);
 
         }
         else
@@ -113,7 +119,7 @@ public class AlarmSettingsActivity extends AppCompatActivity
             {
                 info.setTime(selectedHour*60 + selectedMinute);
                 setTimeText(selectedHour, selectedMinute);
-                repeatSummary.setText(TimeConverter.getDayText(info));
+               // repeatSummary.setText(TimeConverter.getDayText(info));
             }
         }, info.getHours(), info.getMinutes(), false);
 
@@ -127,8 +133,8 @@ public class AlarmSettingsActivity extends AppCompatActivity
 
        // createRepeatDialog();
 
-        repeatSummary = findViewById(R.id.repeat_summary);
-        repeatSummary.setText(TimeConverter.getDayText(info));
+        //repeatSummary = findViewById(R.id.repeat_summary);
+        //repeatSummary.setText(TimeConverter.getDayText(info));
 
 
         originalInfo = new AlarmInfo(info.getTime(), -2345, true, "test", "test", info.getDaysInt(), 0);
@@ -151,13 +157,13 @@ public class AlarmSettingsActivity extends AppCompatActivity
             }
         });
 
-        //read aloud switch
-        findViewById(R.id.read_card).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-                readSwitch.setChecked(!readSwitch.isChecked());
-            }
-        });
+//        //read aloud switch
+//        findViewById(R.id.read_card).setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v)
+//            {
+//                readSwitch.setChecked(!readSwitch.isChecked());
+//            }
+//        });
 
         Button saveBtn = (Button)findViewById(R.id.saveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
@@ -202,14 +208,14 @@ public class AlarmSettingsActivity extends AppCompatActivity
                 startActivityForResult(intent, 5);
             }
         });
-
-        findViewById(R.id.repeat_card).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v)
-            {
-               //repeatDialog.show();
-                showRepeatDialog();
-            }
-        });
+//
+//        findViewById(R.id.repeat_card).setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v)
+//            {
+//               //repeatDialog.show();
+//                showRepeatDialog();
+//            }
+//        });
 
 
     }
